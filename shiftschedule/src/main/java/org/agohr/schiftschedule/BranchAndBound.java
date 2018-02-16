@@ -1,25 +1,20 @@
 package org.agohr.schiftschedule;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.logging.Logger;
-
+import lombok.RequiredArgsConstructor;
 import org.agohr.schiftschedule.vo.Assignment;
 import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.OptionalAssignment;
 import org.agohr.schiftschedule.vo.Shift;
 
-import lombok.AllArgsConstructor;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * assign an employee to every shift. <br/>
  * Satisfy all constraints. <br/>
  * maximize quality based on employee preferences.
  */
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class BranchAndBound {
 
 	private static final Logger LOGGER = Logger.getLogger(BranchAndBound.class.getName());
@@ -28,13 +23,19 @@ public class BranchAndBound {
 	private final Set<Employee> employees;
 	private final Set<Shift> shifts;
 
-	public OptionalAssignment compute() {
+	private long expireTimeMillis;
+
+	public OptionalAssignment compute(long maxRuntimeMillis) {
+		start(maxRuntimeMillis);
 		Assignment assignment = emptyAssignment();
 		OptionalAssignment solution = new OptionalAssignment(null);
 		return compute(solution, assignment);
 	}
 
 	private OptionalAssignment compute(OptionalAssignment solution, Assignment node) {
+		if (expired()) {
+			return solution;
+		}
 		Optional<Shift> nextUnassigned = node.getNextUnassigned();
 		if (!nextUnassigned.isPresent()) {
 			LOGGER.info(node.toString());
@@ -47,6 +48,9 @@ public class BranchAndBound {
 
 	private OptionalAssignment traverseChildren(OptionalAssignment solution, PriorityQueue<Assignment> children) {
 		for (Assignment nextNode : children) {
+			if (expired()) {
+				return solution;
+			}
 			if (nextNode.getQuality() <= solution.getQuality()) {
 				continue;
 			}
@@ -85,6 +89,14 @@ public class BranchAndBound {
 		Assignment.AssignmentBuilder builder = new Assignment.AssignmentBuilder();
 		builder.init(this.shifts);
 		return builder.build();
+	}
+
+	private void start(long maxRuntimeMillis) {
+		expireTimeMillis = System.currentTimeMillis() + maxRuntimeMillis;
+	}
+
+	private boolean expired() {
+		return System.currentTimeMillis() >= expireTimeMillis;
 	}
 
 }

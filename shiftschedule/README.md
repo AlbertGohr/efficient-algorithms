@@ -4,7 +4,6 @@ Based on a given set of employees and shifts, compute the best assigned.
 Algorithm: Branch and Bound
 
 ## Open Tasks
-* implement max runtime
 * fix test
 * improve upper bound to improve runtime. Compare class Assignment.
 * enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift

@@ -65,7 +65,7 @@ public class BranchAndBoundTest {
 				.forEach(constraints::add);
 		// when
 		BranchAndBound bAndB = new BranchAndBound(constraints, employees, shifts);
-		OptionalAssignment optAssignment = bAndB.compute();
+		OptionalAssignment optAssignment = bAndB.compute(10L * 1000L);
 		// then
 		assertTrue(optAssignment.isPresent());
 		Assignment assignment = optAssignment.getAssignment();
