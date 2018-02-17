@@ -23,8 +23,4 @@ public class Employees {
 		return employees.stream();
 	}
 
-	public boolean contains(Employee employee) {
-		return employees.contains(employee);
-	}
-
 }
