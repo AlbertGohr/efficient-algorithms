@@ -1,6 +1,6 @@
 package org.agohr.schiftschedule;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.agohr.schiftschedule.vo.Assignment;
 import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.Rating;
@@ -9,13 +9,13 @@ import org.agohr.schiftschedule.vo.Shift;
 import java.util.Map;
 import java.util.Optional;
 
-@RequiredArgsConstructor
+@Value
 public class QualityEvaluator {
 
 	private final UpperBoundStrategy upperBoundStrategy;
 
 	int computeQuality(Assignment assignment) {
-		return assignment.getAssignment().entrySet().stream()
+		return assignment.stream()
 				.map(entry -> preference(entry, assignment))
 				.map(Rating::getRating)
 				.mapToInt(Integer::intValue)

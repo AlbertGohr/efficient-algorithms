@@ -16,7 +16,7 @@ public class NoOverlappingShiftsConstraint implements Constraint {
 	@Override
 	public boolean violated(Assignment assignment, Shift shift, Employee employee) {
 		Optional<Employee> optEmployee = Optional.of(employee);
-		return assignment.getAssignment().entrySet().stream()
+		return assignment.stream()
 				.filter(entry -> entry.getValue().equals(optEmployee))
 				.map(Map.Entry::getKey)
 				.anyMatch(s -> s.overlap(shift));

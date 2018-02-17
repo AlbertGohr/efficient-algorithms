@@ -1,19 +1,21 @@
 package org.agohr.schiftschedule.vo;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Value;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Value
-@RequiredArgsConstructor
 public class Assignment {
 
-	// TODO make immutable
+	@Getter(AccessLevel.NONE)
 	private final Map<Shift, Optional<Employee>> assignment;
+
+	private Assignment(Map<Shift, Optional<Employee>> assignment) {
+		this.assignment = Collections.unmodifiableMap(assignment);
+	}
 
 	/**
 	 * empty assignment.
@@ -22,6 +24,10 @@ public class Assignment {
 		assignment = new HashMap<>();
 		shifts.stream()
 				.forEach(shift -> assignment.put(shift, Optional.empty()));
+	}
+
+	public Stream<Map.Entry<Shift, Optional<Employee>>> stream() {
+		return assignment.entrySet().stream();
 	}
 
 	/**

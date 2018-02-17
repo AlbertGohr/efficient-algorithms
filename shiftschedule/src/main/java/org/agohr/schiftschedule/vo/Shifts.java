@@ -2,12 +2,14 @@ package org.agohr.schiftschedule.vo;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Value;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+@Value
 public class Shifts {
 
 	@Getter(AccessLevel.NONE)

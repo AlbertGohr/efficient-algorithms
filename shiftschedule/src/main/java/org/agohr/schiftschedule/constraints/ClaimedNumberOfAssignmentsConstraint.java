@@ -62,7 +62,8 @@ public class ClaimedNumberOfAssignmentsConstraint implements Constraint {
 	 * counts also, how many shifts have not been assigned. Stored in key Optional.empty.
 	 */
 	private Map<Optional<Employee>, Long> extendedCounts(Assignment assignment) {
-		return assignment.getAssignment().values().stream()
+		return assignment.stream()
+				.map(Map.Entry::getValue)
 				.collect(Collectors.groupingBy(
 						identity(),
 						Collectors.counting()

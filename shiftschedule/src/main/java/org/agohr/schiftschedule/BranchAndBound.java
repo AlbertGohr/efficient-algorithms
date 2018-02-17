@@ -1,6 +1,6 @@
 package org.agohr.schiftschedule;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.agohr.schiftschedule.vo.Assignment;
 
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Optional;
  * Satisfy all constraints. <br/>
  * maximize quality based on employee preferences.
  */
-@RequiredArgsConstructor
+@Value
 public class BranchAndBound {
 
 	private final BranchAndBoundConfiguration conf;
