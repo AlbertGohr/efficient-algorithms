@@ -1,7 +1,7 @@
 package org.agohr.schiftschedule.constraints;
 
-import org.agohr.schiftschedule.Assignment;
 import org.agohr.schiftschedule.Constraint;
+import org.agohr.schiftschedule.vo.Assignment;
 import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.Shift;
 

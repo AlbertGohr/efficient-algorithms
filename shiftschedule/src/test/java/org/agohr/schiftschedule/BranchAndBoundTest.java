@@ -5,14 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.agohr.schiftschedule.constraints.Constraints;
 import org.agohr.schiftschedule.constraints.OrderedConstraints;
@@ -65,12 +58,13 @@ public class BranchAndBoundTest {
 		ExpireCheck expireCheck = new ExpireCheck(30L * 1000L);
 		UpperBoundStrategy upperBoundStrategy = new CandidateUpperBoundStrategy(employees);
 		// when
-		BranchAndBound bAndB = new BranchAndBound(orderedConstraints, employees, shifts, expireCheck, upperBoundStrategy);
-		OptionalAssignment optAssignment = bAndB.compute();
+		BranchAndBoundConfiguration conf = new BranchAndBoundConfiguration(orderedConstraints, upperBoundStrategy, expireCheck, employees, shifts);
+		BranchAndBound bAndB = new BranchAndBound(conf);
+		Optional<Assignment> optAssignment = bAndB.compute();
 		// then
 		assertTrue(optAssignment.isPresent());
-		Assignment assignment = optAssignment.getAssignment();
-		Set<Shift> keys = assignment.keys();
+		Assignment assignment = optAssignment.get();
+		Set<Shift> keys = assignment.getAssignment().keySet();
 		assertEquals(30, keys.size());
 		// TODO assert
 /*		Shift key = keys.iterator().next();

@@ -1,5 +1,6 @@
 package org.agohr.schiftschedule;
 
+import org.agohr.schiftschedule.vo.Assignment;
 import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.Shift;
 

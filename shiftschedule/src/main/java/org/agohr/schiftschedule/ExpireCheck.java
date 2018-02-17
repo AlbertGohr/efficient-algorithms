@@ -11,11 +11,11 @@ public class ExpireCheck {
 	private long expireTimeMillisBeforeAnySolution;
 	private long expireTimeMillisBeforeOptimalSolution;
 
-	public ExpireCheck(long maxRuntimeMillis) {
+	ExpireCheck(long maxRuntimeMillis) {
 		this(maxRuntimeMillis, maxRuntimeMillis);
 	}
 
-	public ExpireCheck(long maxRuntimeMillisUntilOptimalSolution, long maxRuntimeMillisUntilAnySolution) {
+	ExpireCheck(long maxRuntimeMillisUntilOptimalSolution, long maxRuntimeMillisUntilAnySolution) {
 		assert maxRuntimeMillisUntilAnySolution >= 0L;
 		assert maxRuntimeMillisUntilOptimalSolution >= 0L;
 		assert maxRuntimeMillisUntilAnySolution >= maxRuntimeMillisUntilOptimalSolution;

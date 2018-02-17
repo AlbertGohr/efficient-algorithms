@@ -4,6 +4,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Value;
 import org.agohr.schiftschedule.Constraint;
+import org.agohr.schiftschedule.vo.Assignment;
+import org.agohr.schiftschedule.vo.Employee;
+import org.agohr.schiftschedule.vo.Shift;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +25,11 @@ public class OrderedConstraints {
 
 	public Stream<Constraint> stream() {
 		return constraints.stream();
+	}
+
+	public boolean anyViolated(Assignment assignment, Shift shift, Employee employee) {
+		return constraints.stream()
+				.anyMatch(constraint -> constraint.violated(assignment, shift, employee));
 	}
 
 }

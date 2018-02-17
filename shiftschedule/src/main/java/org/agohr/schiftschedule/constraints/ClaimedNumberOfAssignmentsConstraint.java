@@ -1,16 +1,16 @@
 package org.agohr.schiftschedule.constraints;
 
-import static java.util.function.Function.identity;
+import org.agohr.schiftschedule.Constraint;
+import org.agohr.schiftschedule.vo.Assignment;
+import org.agohr.schiftschedule.vo.Employee;
+import org.agohr.schiftschedule.vo.Shift;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.agohr.schiftschedule.Assignment;
-import org.agohr.schiftschedule.Constraint;
-import org.agohr.schiftschedule.vo.Employee;
-import org.agohr.schiftschedule.vo.Shift;
+import static java.util.function.Function.identity;
 
 /**
  * For each employee e there exists a number c_e of shifts that must be assigned to this employee. <br/>
@@ -62,7 +62,7 @@ public class ClaimedNumberOfAssignmentsConstraint implements Constraint {
 	 * counts also, how many shifts have not been assigned. Stored in key Optional.empty.
 	 */
 	private Map<Optional<Employee>, Long> extendedCounts(Assignment assignment) {
-		return assignment.getAssignmentMap().values().stream()
+		return assignment.getAssignment().values().stream()
 				.collect(Collectors.groupingBy(
 						identity(),
 						Collectors.counting()

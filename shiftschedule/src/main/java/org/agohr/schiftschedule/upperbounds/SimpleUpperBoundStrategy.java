@@ -1,7 +1,7 @@
 package org.agohr.schiftschedule.upperbounds;
 
-import org.agohr.schiftschedule.Assignment;
 import org.agohr.schiftschedule.UpperBoundStrategy;
+import org.agohr.schiftschedule.vo.Assignment;
 import org.agohr.schiftschedule.vo.Rating;
 import org.agohr.schiftschedule.vo.Shift;
 

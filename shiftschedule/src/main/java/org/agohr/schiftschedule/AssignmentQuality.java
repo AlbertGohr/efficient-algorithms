@@ -1,21 +1,17 @@
 package org.agohr.schiftschedule;
 
 import lombok.Value;
+import org.agohr.schiftschedule.vo.Assignment;
 
 @Value
-public class OptionalAssignment {
+class AssignmentQuality {
 
+	// nullable
 	private final Assignment assignment;
 
-	public int getQuality() {
-		if (assignment == null) {
-			return Integer.MIN_VALUE;
-		}
-		return assignment.getQuality();
-	}
+	private final int quality;
 
 	public boolean isPresent() {
 		return assignment != null;
 	}
-
 }
