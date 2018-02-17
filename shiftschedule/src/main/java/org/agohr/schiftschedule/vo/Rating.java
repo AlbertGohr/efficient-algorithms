@@ -14,9 +14,7 @@ public class Rating implements Comparable<Rating> {
 	private final Integer rating;
 
 	public Rating(int rating) {
-		if (rating < min| max < rating) {
-			throw new IllegalArgumentException();
-		}
+		assert min <= rating && rating <= max;
 		this.rating = rating;
 	}
 

@@ -29,7 +29,7 @@ public class NoOverlappingShiftsConstraint implements Constraint {
 		return assignment.getAssignmentMap().entrySet().stream()
 				.filter(entry -> entry.getValue().equals(optEmployee))
 				.map(Map.Entry::getKey)
-				.anyMatch(s -> s.getTimeSlice().overlap(shift.getTimeSlice()));
+				.anyMatch(s -> s.overlap(shift));
 	}
 
 }

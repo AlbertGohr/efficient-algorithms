@@ -2,9 +2,7 @@ package org.agohr.schiftschedule.vo;
 
 import java.util.Collection;
 
-import lombok.Builder;
-import lombok.Singular;
-import lombok.Value;
+import lombok.*;
 
 
 @Value
@@ -17,10 +15,20 @@ public class Employee {
 
 	private int claimedNumberOfAssignments;
 
+	@Getter(AccessLevel.NONE)
 	@Singular
 	private Collection<Shift> candidates;
 
+	@Getter(AccessLevel.NONE)
 	private Preferences preferences;
+
+	public boolean hasCandidate(Shift shift) {
+		return candidates.contains(shift);
+	}
+
+	public Rating preferenceOf(Shift shift) {
+		return preferences.preference(shift);
+	}
 
 	public String toString() {
 		return "Employee(id=" + id + ", name="+name+")";

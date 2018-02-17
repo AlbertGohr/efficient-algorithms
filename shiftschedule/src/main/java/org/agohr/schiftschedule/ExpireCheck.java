@@ -1,9 +1,7 @@
 package org.agohr.schiftschedule;
 
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@EqualsAndHashCode
 @ToString
 public class ExpireCheck {
 
@@ -18,8 +16,9 @@ public class ExpireCheck {
 	}
 
 	public ExpireCheck(long maxRuntimeMillisUntilOptimalSolution, long maxRuntimeMillisUntilAnySolution) {
-		assert maxRuntimeMillisUntilAnySolution >= maxRuntimeMillisUntilOptimalSolution;
+		assert maxRuntimeMillisUntilAnySolution >= 0L;
 		assert maxRuntimeMillisUntilOptimalSolution >= 0L;
+		assert maxRuntimeMillisUntilAnySolution >= maxRuntimeMillisUntilOptimalSolution;
 		this.maxRuntimeMillisUntilAnySolution = maxRuntimeMillisUntilAnySolution;
 		this.maxRuntimeMillisUntilOptimalSolution = maxRuntimeMillisUntilOptimalSolution;
 	}
@@ -38,4 +37,5 @@ public class ExpireCheck {
 		}
 		return now >= expireTimeMillisBeforeAnySolution;
 	}
+
 }

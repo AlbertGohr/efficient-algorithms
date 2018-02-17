@@ -22,7 +22,7 @@ public class CandidateConstraint implements Constraint {
 
 	@Override
 	public boolean violated(Assignment assignment, Shift shift, Employee employee, Assignment nextAssignment) {
-		return !employee.getCandidates().contains(shift);
+		return !employee.hasCandidate(shift);
 	}
 
 }

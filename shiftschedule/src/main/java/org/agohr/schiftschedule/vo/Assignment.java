@@ -23,7 +23,7 @@ public class Assignment {
 		return assignmentMap.entrySet().stream()
 				.filter(entry -> !entry.getValue().isPresent())
 				.map(Map.Entry::getKey)
-				.min(Comparator.comparing(s -> s.getTimeSlice().getStart()));
+				.min(Comparator.comparing(Shift::getStart));
 	}
 
 	public Set<Shift> keys() {
@@ -45,13 +45,14 @@ public class Assignment {
 	private Rating preference(Map.Entry<Shift, Optional<Employee>> entry) {
 		Shift shift = entry.getKey();
 		Optional<Employee> employee = entry.getValue();
-		return employee.map(e -> e.getPreferences().preference(shift)).orElseGet(() -> upperBound(shift));
+		return employee.map(e -> e.preferenceOf(shift))
+				.orElseGet(() -> upperBound(shift));
 	}
 
 	private Rating upperBound(Shift shift) {
 		return employees.stream()
-				.filter(e -> e.getCandidates().contains(shift))
-				.map(e -> e.getPreferences().preference(shift))
+				.filter(e -> e.hasCandidate(shift))
+				.map(e -> e.preferenceOf(shift))
 				.max(Rating::compareTo)
 				.orElseThrow(IllegalStateException::new);
 	}
@@ -81,9 +82,7 @@ public class Assignment {
 		}
 
 		public synchronized Assignment build() {
-			if (assignmentMap == null) {
-				throw new IllegalStateException("Assignment has already been build.");
-			}
+			assert assignmentMap != null;
 			Assignment assignment = new Assignment(assignmentMap, employees);
 			assignmentMap = null;
 			return assignment;
