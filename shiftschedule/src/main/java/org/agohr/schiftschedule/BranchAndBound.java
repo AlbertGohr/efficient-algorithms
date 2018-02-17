@@ -1,9 +1,7 @@
 package org.agohr.schiftschedule;
 
 import lombok.RequiredArgsConstructor;
-import org.agohr.schiftschedule.vo.Assignment;
 import org.agohr.schiftschedule.vo.Employee;
-import org.agohr.schiftschedule.vo.OptionalAssignment;
 import org.agohr.schiftschedule.vo.Shift;
 
 import java.util.*;
@@ -23,6 +21,7 @@ public class BranchAndBound {
 	private final Set<Employee> employees;
 	private final Set<Shift> shifts;
 	private final ExpireCheck expireCheck;
+	private final UpperBoundStrategy upperBoundStrategy;
 
 	public OptionalAssignment compute() {
 		expireCheck.start();
@@ -64,25 +63,19 @@ public class BranchAndBound {
 			if (constraintViolated(node, shift, employee)) {
 				continue;
 			}
-			Assignment child = assign(node, shift, employee);
+			Assignment child = node.assign(shift, employee);
 			children.add(child);
 		}
 		return children;
 	}
 
-	private Assignment assign(Assignment node, Shift shift, Employee employee) {
-		Assignment.AssignmentBuilder builder = new Assignment.AssignmentBuilder(node);
-		builder.assign(shift, employee);
-		return builder.build();
-	}
-
 	private boolean constraintViolated(Assignment assignment, Shift shift, Employee employee) {
-		Assignment nextAssignment = assign(assignment, shift, employee);
-		return constraints.stream().anyMatch(constraint -> constraint.violated(assignment, shift, employee, nextAssignment));
+		Assignment nextAssignment = assignment.assign(shift, employee);
+		return constraints.stream().anyMatch(constraint -> constraint.violated(assignment, shift, employee));
 	}
 
 	private Assignment emptyAssignment() {
-		Assignment.AssignmentBuilder builder = new Assignment.AssignmentBuilder(employees);
+		Assignment.AssignmentBuilder builder = new Assignment.AssignmentBuilder(employees, upperBoundStrategy);
 		builder.init(this.shifts);
 		return builder.build();
 	}

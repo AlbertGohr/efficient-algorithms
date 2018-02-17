@@ -1,6 +1,9 @@
-package org.agohr.schiftschedule.vo;
+package org.agohr.schiftschedule;
 
 import lombok.Value;
+import org.agohr.schiftschedule.vo.Employee;
+import org.agohr.schiftschedule.vo.Rating;
+import org.agohr.schiftschedule.vo.Shift;
 
 import java.util.*;
 
@@ -11,11 +14,14 @@ public class Assignment {
 
 	private final Set<Employee> employees;
 
+	private final UpperBoundStrategy upperBoundStrategy;
+
 	private final int quality;
 
-	private Assignment(Map<Shift, Optional<Employee>> assignmentMap, Set<Employee> employees) {
+	private Assignment(Map<Shift, Optional<Employee>> assignmentMap, Set<Employee> employees, UpperBoundStrategy upperBoundStrategy) {
 		this.assignmentMap = Collections.unmodifiableMap(assignmentMap);
 		this.employees = employees;
+		this.upperBoundStrategy = upperBoundStrategy;
 		quality = computeQuality();
 	}
 
@@ -46,15 +52,13 @@ public class Assignment {
 		Shift shift = entry.getKey();
 		Optional<Employee> employee = entry.getValue();
 		return employee.map(e -> e.preferenceOf(shift))
-				.orElseGet(() -> upperBound(shift));
+				.orElseGet(() ->  upperBoundStrategy.getUpperBound(shift,this));
 	}
 
-	private Rating upperBound(Shift shift) {
-		return employees.stream()
-				.filter(e -> e.hasCandidate(shift))
-				.map(e -> e.preferenceOf(shift))
-				.max(Rating::compareTo)
-				.orElseThrow(IllegalStateException::new);
+	public Assignment assign(Shift shift, Employee employee) {
+		Assignment.AssignmentBuilder builder = new Assignment.AssignmentBuilder(this);
+		builder.assign(shift, employee);
+		return builder.build();
 	}
 
 	public static class AssignmentBuilder {
@@ -63,13 +67,17 @@ public class Assignment {
 
 		private final Set<Employee> employees;
 
-		public AssignmentBuilder(Set<Employee> employees) {
+		private final UpperBoundStrategy upperBoundStrategy;
+
+		public AssignmentBuilder(Set<Employee> employees, UpperBoundStrategy upperBoundStrategy) {
 			this.employees = new HashSet<>(employees);
+			this.upperBoundStrategy = upperBoundStrategy;
 		}
 
 		public AssignmentBuilder(Assignment assignment) {
 			this.assignmentMap.putAll(assignment.assignmentMap);
 			this.employees = new HashSet<>(assignment.employees);
+			this.upperBoundStrategy = assignment.upperBoundStrategy;
 		}
 
 		public void init(Set<Shift> shifts) {
@@ -83,7 +91,7 @@ public class Assignment {
 
 		public synchronized Assignment build() {
 			assert assignmentMap != null;
-			Assignment assignment = new Assignment(assignmentMap, employees);
+			Assignment assignment = new Assignment(assignmentMap, employees, upperBoundStrategy);
 			assignmentMap = null;
 			return assignment;
 		}

@@ -1,6 +1,6 @@
 package org.agohr.schiftschedule.constraints;
 
-import org.agohr.schiftschedule.vo.Assignment;
+import org.agohr.schiftschedule.Assignment;
 import org.agohr.schiftschedule.Constraint;
 import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.Shift;
@@ -21,7 +21,7 @@ public class CandidateConstraint implements Constraint {
 	}
 
 	@Override
-	public boolean violated(Assignment assignment, Shift shift, Employee employee, Assignment nextAssignment) {
+	public boolean violated(Assignment assignment, Shift shift, Employee employee) {
 		return !employee.hasCandidate(shift);
 	}
 

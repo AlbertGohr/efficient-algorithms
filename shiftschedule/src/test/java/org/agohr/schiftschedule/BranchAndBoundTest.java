@@ -15,9 +15,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.agohr.schiftschedule.constraints.Constraints;
-import org.agohr.schiftschedule.vo.Assignment;
+import org.agohr.schiftschedule.upperbounds.CandidateUpperBoundStrategy;
 import org.agohr.schiftschedule.vo.Employee;
-import org.agohr.schiftschedule.vo.OptionalAssignment;
 import org.agohr.schiftschedule.vo.Preferences;
 import org.agohr.schiftschedule.vo.Rating;
 import org.agohr.schiftschedule.vo.Shift;
@@ -63,9 +62,10 @@ public class BranchAndBoundTest {
 		Arrays.stream(Constraints.values())
 				.map(Constraints::get)
 				.forEach(constraints::add);
-		ExpireCheck expireCheck = new ExpireCheck(0L, 30L * 1000L);
+		ExpireCheck expireCheck = new ExpireCheck(30L * 1000L);
+		UpperBoundStrategy upperBoundStrategy = new CandidateUpperBoundStrategy(employees);
 		// when
-		BranchAndBound bAndB = new BranchAndBound(constraints, employees, shifts, expireCheck);
+		BranchAndBound bAndB = new BranchAndBound(constraints, employees, shifts, expireCheck, upperBoundStrategy);
 		OptionalAssignment optAssignment = bAndB.compute();
 		// then
 		assertTrue(optAssignment.isPresent());

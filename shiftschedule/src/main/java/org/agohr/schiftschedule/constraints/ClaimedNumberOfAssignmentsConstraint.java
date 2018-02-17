@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.agohr.schiftschedule.vo.Assignment;
+import org.agohr.schiftschedule.Assignment;
 import org.agohr.schiftschedule.Constraint;
 import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.Shift;
@@ -31,7 +31,7 @@ public class ClaimedNumberOfAssignmentsConstraint implements Constraint {
 	}
 
 	@Override
-	public boolean violated(Assignment assignment, Shift shift, Employee employee, Assignment nextAssignment) {
+	public boolean violated(Assignment assignment, Shift shift, Employee employee) {
 		Map<Optional<Employee>, Long> extendedCounts = extendedCounts(assignment);
 		Map<Employee, Long> employeeCounts = new HashMap<>(extendedCounts.size());
 		long available = 0L;
