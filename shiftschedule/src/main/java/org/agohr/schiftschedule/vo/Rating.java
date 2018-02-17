@@ -6,7 +6,7 @@ import lombok.Value;
  * a value from [min,max]
  */
 @Value
-public class Rating {
+public class Rating implements Comparable<Rating> {
 
 	public static final int min = 1;
 	public static final int max = 5;
@@ -20,4 +20,8 @@ public class Rating {
 		this.rating = rating;
 	}
 
+	@Override
+	public int compareTo(Rating other) {
+		return Integer.compare(rating, other.rating);
+	}
 }

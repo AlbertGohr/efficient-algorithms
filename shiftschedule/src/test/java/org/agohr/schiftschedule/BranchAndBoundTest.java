@@ -63,9 +63,10 @@ public class BranchAndBoundTest {
 		Arrays.stream(Constraints.values())
 				.map(Constraints::get)
 				.forEach(constraints::add);
+		ExpireCheck expireCheck = new ExpireCheck(0L, 30L * 1000L);
 		// when
-		BranchAndBound bAndB = new BranchAndBound(constraints, employees, shifts);
-		OptionalAssignment optAssignment = bAndB.compute(10L * 1000L);
+		BranchAndBound bAndB = new BranchAndBound(constraints, employees, shifts, expireCheck);
+		OptionalAssignment optAssignment = bAndB.compute();
 		// then
 		assertTrue(optAssignment.isPresent());
 		Assignment assignment = optAssignment.getAssignment();

@@ -1,23 +1,21 @@
 package org.agohr.schiftschedule.vo;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
 import lombok.Value;
+
+import java.util.*;
 
 @Value
 public class Assignment {
 
 	private final Map<Shift, Optional<Employee>> assignmentMap;
 
+	private final Set<Employee> employees;
+
 	private final int quality;
 
-	private Assignment(Map<Shift, Optional<Employee>> assignmentMap) {
+	private Assignment(Map<Shift, Optional<Employee>> assignmentMap, Set<Employee> employees) {
 		this.assignmentMap = Collections.unmodifiableMap(assignmentMap);
+		this.employees = employees;
 		quality = computeQuality();
 	}
 
@@ -47,24 +45,30 @@ public class Assignment {
 	private Rating preference(Map.Entry<Shift, Optional<Employee>> entry) {
 		Shift shift = entry.getKey();
 		Optional<Employee> employee = entry.getValue();
-		return employee.map(e -> e.getPreferences().preference(shift)).orElseGet(this::upperBound);
+		return employee.map(e -> e.getPreferences().preference(shift)).orElseGet(() -> upperBound(shift));
 	}
 
-	private Rating upperBound() {
-		// TODO improvable
-		return new Rating(Rating.max);
+	private Rating upperBound(Shift shift) {
+		return employees.stream()
+				.filter(e -> e.getCandidates().contains(shift))
+				.map(e -> e.getPreferences().preference(shift))
+				.max(Rating::compareTo)
+				.orElseThrow(IllegalStateException::new);
 	}
 
 	public static class AssignmentBuilder {
 
 		private Map<Shift, Optional<Employee>> assignmentMap = new HashMap<>();
 
-		public AssignmentBuilder() {
-			// default constructor
+		private final Set<Employee> employees;
+
+		public AssignmentBuilder(Set<Employee> employees) {
+			this.employees = new HashSet<>(employees);
 		}
 
 		public AssignmentBuilder(Assignment assignment) {
 			this.assignmentMap.putAll(assignment.assignmentMap);
+			this.employees = new HashSet<>(assignment.employees);
 		}
 
 		public void init(Set<Shift> shifts) {
@@ -72,6 +76,7 @@ public class Assignment {
 		}
 
 		public void assign(Shift shift, Employee employee) {
+			assert employees.contains(employee);
 			assignmentMap.put(shift, Optional.ofNullable(employee));
 		}
 
@@ -79,7 +84,7 @@ public class Assignment {
 			if (assignmentMap == null) {
 				throw new IllegalStateException("Assignment has already been build.");
 			}
-			Assignment assignment = new Assignment(assignmentMap);
+			Assignment assignment = new Assignment(assignmentMap, employees);
 			assignmentMap = null;
 			return assignment;
 		}

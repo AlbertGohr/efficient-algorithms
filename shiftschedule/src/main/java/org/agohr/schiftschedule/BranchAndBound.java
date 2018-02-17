@@ -22,20 +22,16 @@ public class BranchAndBound {
 	private final List<Constraint> constraints;
 	private final Set<Employee> employees;
 	private final Set<Shift> shifts;
+	private final ExpireCheck expireCheck;
 
-	private long expireTimeMillis;
-
-	public OptionalAssignment compute(long maxRuntimeMillis) {
-		start(maxRuntimeMillis);
+	public OptionalAssignment compute() {
+		expireCheck.start();
 		Assignment assignment = emptyAssignment();
 		OptionalAssignment solution = new OptionalAssignment(null);
 		return compute(solution, assignment);
 	}
 
 	private OptionalAssignment compute(OptionalAssignment solution, Assignment node) {
-		if (expired()) {
-			return solution;
-		}
 		Optional<Shift> nextUnassigned = node.getNextUnassigned();
 		if (!nextUnassigned.isPresent()) {
 			LOGGER.info(node.toString());
@@ -48,7 +44,7 @@ public class BranchAndBound {
 
 	private OptionalAssignment traverseChildren(OptionalAssignment solution, PriorityQueue<Assignment> children) {
 		for (Assignment nextNode : children) {
-			if (expired()) {
+			if (expireCheck.expired(solution.isPresent())) {
 				return solution;
 			}
 			if (nextNode.getQuality() <= solution.getQuality()) {
@@ -86,17 +82,11 @@ public class BranchAndBound {
 	}
 
 	private Assignment emptyAssignment() {
-		Assignment.AssignmentBuilder builder = new Assignment.AssignmentBuilder();
+		Assignment.AssignmentBuilder builder = new Assignment.AssignmentBuilder(employees);
 		builder.init(this.shifts);
 		return builder.build();
 	}
 
-	private void start(long maxRuntimeMillis) {
-		expireTimeMillis = System.currentTimeMillis() + maxRuntimeMillis;
-	}
 
-	private boolean expired() {
-		return System.currentTimeMillis() >= expireTimeMillis;
-	}
 
 }
