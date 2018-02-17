@@ -13,21 +13,29 @@ import java.util.Optional;
 @Value
 public class BranchAndBound {
 
-	private final BranchAndBoundConfiguration conf;
+	private final Configuration conf;
+	private final Data data;
 
 	public Optional<Assignment> compute() {
 		conf.getExpireCheck().start();
+		if (data.getShifts().isEmpty()) {
+			return emptyAssignment();
+		}
 		Node root = createRoot();
 		AssignmentQuality bestSolutionSoFar = new AssignmentQuality(null, Integer.MIN_VALUE);
 		AssignmentQuality solution = root.compute(bestSolutionSoFar);
 		return Optional.ofNullable(solution.getAssignment());
 	}
 
+	private Optional<Assignment> emptyAssignment() {
+		Assignment assignment = new Assignment();
+		return Optional.of(assignment);
+	}
+
 	private Node createRoot() {
-		Assignment assignment = new Assignment(conf.getShifts());
-		// TODO special case: shifts are empty -> solution = empty assignment
+		Assignment assignment = new Assignment(data.getShifts());
 		AssignmentQuality aq = new AssignmentQuality(assignment, Integer.MIN_VALUE);
-		return new Node(aq, conf);
+		return new Node(aq, conf, data);
 	}
 
 }

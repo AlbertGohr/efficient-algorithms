@@ -24,7 +24,7 @@ public class BranchAndBoundTest {
 					LocalDateTime start = LocalDateTime.of(2018, Month.JANUARY, 8 + i + j * 7, 8 + k, 0);
 					LocalDateTime stop = LocalDateTime.of(2018, Month.JANUARY, 8 + i + j * 7, 17 + k, 0);
 					TimeSlice timeSlice = new TimeSlice(start, stop);
-					Shift shift = new Shift(j*100 + i*10 + k, timeSlice);
+					Shift shift = new Shift(j * 100 + i * 10 + k, timeSlice);
 					shiftSet.add(shift);
 				}
 			}
@@ -57,9 +57,10 @@ public class BranchAndBoundTest {
 		OrderedConstraints orderedConstraints = new OrderedConstraints(constraintsList);
 		ExpireCheck expireCheck = new ExpireCheck(30L * 1000L);
 		UpperBoundStrategy upperBoundStrategy = new CandidateUpperBoundStrategy(employees);
-		BranchAndBoundConfiguration conf = new BranchAndBoundConfiguration(orderedConstraints, upperBoundStrategy, expireCheck, employees, shifts);
+		Configuration conf = new Configuration(orderedConstraints, upperBoundStrategy, expireCheck);
+		Data data = new Data(employees, shifts);
 		// when
-		BranchAndBound bAndB = new BranchAndBound(conf);
+		BranchAndBound bAndB = new BranchAndBound(conf, data);
 		Optional<Assignment> optAssignment = bAndB.compute();
 		// then
 		assertTrue(optAssignment.isPresent());

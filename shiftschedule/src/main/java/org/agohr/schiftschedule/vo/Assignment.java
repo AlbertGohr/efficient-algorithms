@@ -14,17 +14,30 @@ public class Assignment {
 	@Getter(AccessLevel.NONE)
 	private final Map<Shift, Optional<Employee>> assignment;
 
+	/**
+	 * There are no shifts to be assigned.
+	 */
+	public Assignment() {
+		this(new HashMap<>());
+	}
+
+	/**
+	 * There are shifts to be assigned, but none has been assigned yet.
+	 */
+	public Assignment(Shifts shifts) {
+		this(noAssignment(shifts));
+	}
+
 	private Assignment(Map<Shift, Optional<Employee>> assignment) {
 		this.assignment = Collections.unmodifiableMap(assignment);
 	}
 
-	/**
-	 * empty assignment.
-	 */
-	public Assignment(Shifts shifts) {
-		assignment = new HashMap<>();
+
+	private static Map<Shift, Optional<Employee>> noAssignment(Shifts shifts) {
+		Map<Shift, Optional<Employee>> assignment = new HashMap<>();
 		shifts.stream()
 				.forEach(shift -> assignment.put(shift, Optional.empty()));
+		return assignment;
 	}
 
 	public Stream<Map.Entry<Shift, Optional<Employee>>> stream() {

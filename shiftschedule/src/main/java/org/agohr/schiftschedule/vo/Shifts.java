@@ -28,4 +28,8 @@ public class Shifts {
 	public boolean contains(Shift shift) {
 		return shifts.contains(shift);
 	}
+
+	public boolean isEmpty() {
+		return shifts.isEmpty();
+	}
 }

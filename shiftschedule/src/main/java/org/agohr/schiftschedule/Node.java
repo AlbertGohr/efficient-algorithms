@@ -12,12 +12,14 @@ class Node {
 	private static final Logger LOGGER = Logger.getLogger(Node.class.getName());
 
 	private final AssignmentQuality assignmentQuality;
-	private final BranchAndBoundConfiguration conf;
+	private final Configuration conf;
+	private final Data data;
 	private final QualityEvaluator qualityEvaluator;
 
-	Node(AssignmentQuality assignmentQuality, BranchAndBoundConfiguration conf) {
+	Node(AssignmentQuality assignmentQuality, Configuration conf, Data data) {
 		this.assignmentQuality = assignmentQuality;
 		this.conf = conf;
+		this.data = data;
 		this.qualityEvaluator = new QualityEvaluator(conf.getUpperBoundStrategy());
 	}
 
@@ -54,7 +56,7 @@ class Node {
 
 	private PriorityQueue<Node> getChildren(Shift shift) {
 		PriorityQueue<Node> children = new PriorityQueue<>(Comparator.comparingInt(Node::quality));
-		conf.getEmployees().stream()
+		data.getEmployees().stream()
 				.filter(e -> !conf.getConstraints().anyViolated(assignmentQuality.getAssignment(), shift, e))
 				.map(e -> createChild(shift, e))
 				.forEach(children::add);
@@ -65,7 +67,7 @@ class Node {
 		Assignment assigned = assignmentQuality.getAssignment().add(shift, employee);
 		int quality = qualityEvaluator.computeQuality(assigned);
 		AssignmentQuality assignedQuality = new AssignmentQuality(assigned, quality);
-		return new Node(assignedQuality, conf);
+		return new Node(assignedQuality, conf, data);
 	}
 
 }
