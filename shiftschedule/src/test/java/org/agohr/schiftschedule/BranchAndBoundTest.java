@@ -24,18 +24,19 @@ public class BranchAndBoundTest {
 					LocalDateTime start = LocalDateTime.of(2018, Month.JANUARY, 8 + i + j * 7, 8 + k, 0);
 					LocalDateTime stop = LocalDateTime.of(2018, Month.JANUARY, 8 + i + j * 7, 17 + k, 0);
 					TimeSlice timeSlice = new TimeSlice(start, stop);
-					Shift shift = new Shift(1L, timeSlice);
+					Shift shift = new Shift(j*100 + i*10 + k, timeSlice);
 					shiftSet.add(shift);
 				}
 			}
 		}
 		Shifts shifts = new Shifts(shiftSet);
-		Collection<Shift> candidates = new HashSet<>(shiftSet);
+		Set<Shift> candidatesSet = new HashSet<>(shiftSet);
 		Map<Shift, Rating> p = new HashMap<>();
 		// TODO restrict candidates, vary preferences
-		for (Shift s : candidates) {
+		for (Shift s : candidatesSet) {
 			p.put(s, new Rating(3));
 		}
+		Shifts candidates = new Shifts(candidatesSet);
 		Preferences preferences = new Preferences(p);
 		Set<Employee> employeesSet = new HashSet<>();
 		for (int i = 0; i < 3; ++i) {
@@ -56,8 +57,8 @@ public class BranchAndBoundTest {
 		OrderedConstraints orderedConstraints = new OrderedConstraints(constraintsList);
 		ExpireCheck expireCheck = new ExpireCheck(30L * 1000L);
 		UpperBoundStrategy upperBoundStrategy = new CandidateUpperBoundStrategy(employees);
-		// when
 		BranchAndBoundConfiguration conf = new BranchAndBoundConfiguration(orderedConstraints, upperBoundStrategy, expireCheck, employees, shifts);
+		// when
 		BranchAndBound bAndB = new BranchAndBound(conf);
 		Optional<Assignment> optAssignment = bAndB.compute();
 		// then

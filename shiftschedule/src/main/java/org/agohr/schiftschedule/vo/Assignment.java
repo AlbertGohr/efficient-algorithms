@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Value;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Value
@@ -44,6 +45,20 @@ public class Assignment {
 				.filter(entry -> !entry.getValue().isPresent())
 				.map(Map.Entry::getKey)
 				.min(Comparator.comparing(Shift::getStart));
+	}
+
+	@Override
+	public String toString() {
+		String toString = stream()
+				.map(this::entryString)
+				.collect(Collectors.joining(","));
+		return "Assignment (shiftId:employeeId) [" + toString + "]";
+	}
+
+	private String entryString(Map.Entry<Shift, Optional<Employee>> entry) {
+		Optional<Employee> employee = entry.getValue();
+		String value = employee.map(e -> String.valueOf(e.getId())).orElse("/");
+		return entry.getKey().getId() + ":" + value;
 	}
 
 }

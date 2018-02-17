@@ -1,8 +1,9 @@
 package org.agohr.schiftschedule.vo;
 
-import java.util.Collection;
-
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Value;
 
 
 @Value
@@ -16,8 +17,7 @@ public class Employee {
 	private int claimedNumberOfAssignments;
 
 	@Getter(AccessLevel.NONE)
-	@Singular
-	private Collection<Shift> candidates;
+	private Shifts candidates;
 
 	@Getter(AccessLevel.NONE)
 	private Preferences preferences;
