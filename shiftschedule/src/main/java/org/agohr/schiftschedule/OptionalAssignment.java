@@ -1,7 +1,6 @@
 package org.agohr.schiftschedule;
 
 import lombok.Value;
-import org.agohr.schiftschedule.Assignment;
 
 @Value
 public class OptionalAssignment {

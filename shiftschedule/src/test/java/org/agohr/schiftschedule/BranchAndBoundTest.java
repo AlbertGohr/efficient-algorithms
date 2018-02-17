@@ -15,12 +15,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.agohr.schiftschedule.constraints.Constraints;
+import org.agohr.schiftschedule.constraints.OrderedConstraints;
 import org.agohr.schiftschedule.upperbounds.CandidateUpperBoundStrategy;
-import org.agohr.schiftschedule.vo.Employee;
-import org.agohr.schiftschedule.vo.Preferences;
-import org.agohr.schiftschedule.vo.Rating;
-import org.agohr.schiftschedule.vo.Shift;
-import org.agohr.schiftschedule.vo.TimeSlice;
+import org.agohr.schiftschedule.vo.*;
 import org.junit.Test;
 
 public class BranchAndBoundTest {
@@ -28,7 +25,7 @@ public class BranchAndBoundTest {
 	@Test
 	public void testComputeExpectAssignment() {
 		// given
-		Set<Shift> shifts = new HashSet<>();
+		Set<Shift> shiftSet = new HashSet<>();
 		for (int j = 0; j < 3; ++j) {
 			for (int i = 0; i < 5; ++i) {
 				for (int k = 0; k < 2; ++k) {
@@ -36,18 +33,19 @@ public class BranchAndBoundTest {
 					LocalDateTime stop = LocalDateTime.of(2018, Month.JANUARY, 8 + i + j * 7, 17 + k, 0);
 					TimeSlice timeSlice = new TimeSlice(start, stop);
 					Shift shift = new Shift(1L, timeSlice);
-					shifts.add(shift);
+					shiftSet.add(shift);
 				}
 			}
 		}
-		Collection<Shift> candidates = new HashSet<>(shifts);
+		Shifts shifts = new Shifts(shiftSet);
+		Collection<Shift> candidates = new HashSet<>(shiftSet);
 		Map<Shift, Rating> p = new HashMap<>();
 		// TODO restrict candidates, vary preferences
 		for (Shift s : candidates) {
 			p.put(s, new Rating(3));
 		}
 		Preferences preferences = new Preferences(p);
-		Set<Employee> employees = new HashSet<>();
+		Set<Employee> employeesSet = new HashSet<>();
 		for (int i = 0; i < 3; ++i) {
 			Employee employee = Employee.builder()
 					.id(i)
@@ -56,16 +54,18 @@ public class BranchAndBoundTest {
 					.candidates(candidates)
 					.preferences(preferences)
 					.build();
-			employees.add(employee);
+			employeesSet.add(employee);
 		}
-		List<Constraint> constraints = new ArrayList<>();
+		Employees employees = new Employees(employeesSet);
+		List<Constraint> constraintsList = new ArrayList<>();
 		Arrays.stream(Constraints.values())
 				.map(Constraints::get)
-				.forEach(constraints::add);
+				.forEach(constraintsList::add);
+		OrderedConstraints orderedConstraints = new OrderedConstraints(constraintsList);
 		ExpireCheck expireCheck = new ExpireCheck(30L * 1000L);
 		UpperBoundStrategy upperBoundStrategy = new CandidateUpperBoundStrategy(employees);
 		// when
-		BranchAndBound bAndB = new BranchAndBound(constraints, employees, shifts, expireCheck, upperBoundStrategy);
+		BranchAndBound bAndB = new BranchAndBound(orderedConstraints, employees, shifts, expireCheck, upperBoundStrategy);
 		OptionalAssignment optAssignment = bAndB.compute();
 		// then
 		assertTrue(optAssignment.isPresent());

@@ -1,9 +1,7 @@
 package org.agohr.schiftschedule;
 
 import lombok.Value;
-import org.agohr.schiftschedule.vo.Employee;
-import org.agohr.schiftschedule.vo.Rating;
-import org.agohr.schiftschedule.vo.Shift;
+import org.agohr.schiftschedule.vo.*;
 
 import java.util.*;
 
@@ -12,13 +10,13 @@ public class Assignment {
 
 	private final Map<Shift, Optional<Employee>> assignmentMap;
 
-	private final Set<Employee> employees;
+	private final Employees employees;
 
 	private final UpperBoundStrategy upperBoundStrategy;
 
 	private final int quality;
 
-	private Assignment(Map<Shift, Optional<Employee>> assignmentMap, Set<Employee> employees, UpperBoundStrategy upperBoundStrategy) {
+	private Assignment(Map<Shift, Optional<Employee>> assignmentMap, Employees employees, UpperBoundStrategy upperBoundStrategy) {
 		this.assignmentMap = Collections.unmodifiableMap(assignmentMap);
 		this.employees = employees;
 		this.upperBoundStrategy = upperBoundStrategy;
@@ -65,23 +63,23 @@ public class Assignment {
 
 		private Map<Shift, Optional<Employee>> assignmentMap = new HashMap<>();
 
-		private final Set<Employee> employees;
+		private final Employees employees;
 
 		private final UpperBoundStrategy upperBoundStrategy;
 
-		public AssignmentBuilder(Set<Employee> employees, UpperBoundStrategy upperBoundStrategy) {
-			this.employees = new HashSet<>(employees);
+		public AssignmentBuilder(Employees employees, UpperBoundStrategy upperBoundStrategy) {
+			this.employees = employees;
 			this.upperBoundStrategy = upperBoundStrategy;
 		}
 
 		public AssignmentBuilder(Assignment assignment) {
 			this.assignmentMap.putAll(assignment.assignmentMap);
-			this.employees = new HashSet<>(assignment.employees);
+			this.employees = assignment.employees;
 			this.upperBoundStrategy = assignment.upperBoundStrategy;
 		}
 
-		public void init(Set<Shift> shifts) {
-			shifts.forEach(shift -> assignmentMap.put(shift, Optional.empty()));
+		public void init(Shifts shifts) {
+			shifts.stream().forEach(shift -> assignmentMap.put(shift, Optional.empty()));
 		}
 
 		public void assign(Shift shift, Employee employee) {

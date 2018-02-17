@@ -18,10 +18,6 @@ public class Shift {
 		return timeSlice.getStart();
 	}
 
-	public LocalDateTime getStop() {
-		return timeSlice.getStop();
-	}
-
 	public boolean overlap(Shift other) {
 		return timeSlice.overlap(other.timeSlice);
 	}

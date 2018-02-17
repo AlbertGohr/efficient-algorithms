@@ -1,10 +1,15 @@
 package org.agohr.schiftschedule;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
+import org.agohr.schiftschedule.constraints.OrderedConstraints;
 import org.agohr.schiftschedule.vo.Employee;
+import org.agohr.schiftschedule.vo.Employees;
 import org.agohr.schiftschedule.vo.Shift;
+import org.agohr.schiftschedule.vo.Shifts;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.PriorityQueue;
 import java.util.logging.Logger;
 
 /**
@@ -12,14 +17,14 @@ import java.util.logging.Logger;
  * Satisfy all constraints. <br/>
  * maximize quality based on employee preferences.
  */
-@RequiredArgsConstructor
+@Builder
 public class BranchAndBound {
 
 	private static final Logger LOGGER = Logger.getLogger(BranchAndBound.class.getName());
 
-	private final List<Constraint> constraints;
-	private final Set<Employee> employees;
-	private final Set<Shift> shifts;
+	private final OrderedConstraints constraints;
+	private final Employees employees;
+	private final Shifts shifts;
 	private final ExpireCheck expireCheck;
 	private final UpperBoundStrategy upperBoundStrategy;
 
@@ -59,18 +64,14 @@ public class BranchAndBound {
 
 	private PriorityQueue<Assignment> getChildren(Assignment node, Shift shift) {
 		PriorityQueue<Assignment> children = new PriorityQueue<>(Comparator.comparingInt(Assignment::getQuality));
-		for (Employee employee : employees) {
-			if (constraintViolated(node, shift, employee)) {
-				continue;
-			}
-			Assignment child = node.assign(shift, employee);
-			children.add(child);
-		}
+		employees.stream()
+				.filter(e -> !constraintViolated(node, shift, e))
+				.map(e -> node.assign(shift, e))
+				.forEach(children::add);
 		return children;
 	}
 
 	private boolean constraintViolated(Assignment assignment, Shift shift, Employee employee) {
-		Assignment nextAssignment = assignment.assign(shift, employee);
 		return constraints.stream().anyMatch(constraint -> constraint.violated(assignment, shift, employee));
 	}
 
@@ -79,7 +80,6 @@ public class BranchAndBound {
 		builder.init(this.shifts);
 		return builder.build();
 	}
-
 
 
 }
