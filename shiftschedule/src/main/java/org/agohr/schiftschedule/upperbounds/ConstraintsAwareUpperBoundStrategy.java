@@ -1,5 +1,6 @@
 package org.agohr.schiftschedule.upperbounds;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.agohr.schiftschedule.Assignment;
 import org.agohr.schiftschedule.Constraint;
@@ -14,7 +15,7 @@ import java.util.Set;
 /**
  * Considers current assignment and constraints.
  */
-@Value
+@RequiredArgsConstructor
 public class ConstraintsAwareUpperBoundStrategy implements UpperBoundStrategy {
 
 	private final Set<Employee> employees;

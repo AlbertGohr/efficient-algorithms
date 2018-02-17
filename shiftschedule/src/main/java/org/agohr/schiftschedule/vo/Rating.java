@@ -8,8 +8,11 @@ import lombok.Value;
 @Value
 public class Rating implements Comparable<Rating> {
 
-	public static final int min = 1;
-	public static final int max = 5;
+	private static final int min = 1;
+	private static final int max = 5;
+
+	public static final Rating MinRating = new Rating(min);
+	public static final Rating MaxRating = new Rating(max);
 
 	private final Integer rating;
 

@@ -30,6 +30,9 @@ public class ExpireCheck {
 		expireTimeMillisBeforeAnySolution = now + maxRuntimeMillisUntilAnySolution;
 	}
 
+	/**
+	 * returns true if the program has expired since start has been called.
+	 */
 	public boolean expired(boolean solutionFound) {
 		long now = System.currentTimeMillis();
 		if (solutionFound) {

@@ -3,9 +3,9 @@ package org.agohr.schiftschedule.constraints;
 import org.agohr.schiftschedule.Constraint;
 
 public enum Constraints {
-	Candidate(CandidateConstraint.getInstance()),
-	ClaimedNumberOfAssignments(ClaimedNumberOfAssignmentsConstraint.getInstance()),
-	NoOverlappingShifts(NoOverlappingShiftsConstraint.getInstance());
+	Candidate(new CandidateConstraint()),
+	ClaimedNumberOfAssignments(new ClaimedNumberOfAssignmentsConstraint()),
+	NoOverlappingShifts(new NoOverlappingShiftsConstraint());
 
 	private final Constraint constraint;
 

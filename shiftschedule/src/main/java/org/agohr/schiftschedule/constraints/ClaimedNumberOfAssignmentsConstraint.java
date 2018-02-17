@@ -20,16 +20,6 @@ import org.agohr.schiftschedule.vo.Shift;
  */
 public class ClaimedNumberOfAssignmentsConstraint implements Constraint {
 
-	private static final ClaimedNumberOfAssignmentsConstraint instance = new ClaimedNumberOfAssignmentsConstraint();
-
-	static ClaimedNumberOfAssignmentsConstraint getInstance() {
-		return instance;
-	}
-
-	private ClaimedNumberOfAssignmentsConstraint() {
-		// hidden
-	}
-
 	@Override
 	public boolean violated(Assignment assignment, Shift shift, Employee employee) {
 		Map<Optional<Employee>, Long> extendedCounts = extendedCounts(assignment);

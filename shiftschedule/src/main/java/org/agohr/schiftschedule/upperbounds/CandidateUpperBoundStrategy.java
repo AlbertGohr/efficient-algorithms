@@ -1,5 +1,6 @@
 package org.agohr.schiftschedule.upperbounds;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.agohr.schiftschedule.Assignment;
 import org.agohr.schiftschedule.UpperBoundStrategy;
@@ -14,7 +15,7 @@ import java.util.Set;
 /**
  * fixed upper bound for every shift, based on employee preferences.
  */
-@Value
+@RequiredArgsConstructor
 public class CandidateUpperBoundStrategy implements UpperBoundStrategy {
 
 	private final Set<Employee> employees;

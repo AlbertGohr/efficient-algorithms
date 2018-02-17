@@ -13,16 +13,6 @@ import org.agohr.schiftschedule.vo.Shift;
  */
 public class NoOverlappingShiftsConstraint implements Constraint {
 
-	private static final NoOverlappingShiftsConstraint instance = new NoOverlappingShiftsConstraint();
-
-	static NoOverlappingShiftsConstraint getInstance() {
-		return instance;
-	}
-
-	private NoOverlappingShiftsConstraint() {
-		// hidden
-	}
-
 	@Override
 	public boolean violated(Assignment assignment, Shift shift, Employee employee) {
 		Optional<Employee> optEmployee = Optional.of(employee);

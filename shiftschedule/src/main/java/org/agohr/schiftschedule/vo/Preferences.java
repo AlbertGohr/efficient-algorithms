@@ -37,9 +37,9 @@ public class Preferences {
 	}
 
 	private static int computeAvg() {
-		int dif = Rating.max - Rating.min;
+		int dif = Rating.MaxRating.getRating() - Rating.MinRating.getRating();
 		assert dif % 2 == 0;
-		return Rating.min + dif / 2;
+		return Rating.MinRating.getRating() + dif / 2;
 	}
 
 }

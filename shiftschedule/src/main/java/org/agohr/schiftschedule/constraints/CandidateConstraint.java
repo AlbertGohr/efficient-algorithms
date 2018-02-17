@@ -10,16 +10,6 @@ import org.agohr.schiftschedule.vo.Shift;
  */
 public class CandidateConstraint implements Constraint {
 
-	private static final CandidateConstraint instance = new CandidateConstraint();
-
-	static CandidateConstraint getInstance() {
-		return instance;
-	}
-
-	private CandidateConstraint() {
-		// hidden
-	}
-
 	@Override
 	public boolean violated(Assignment assignment, Shift shift, Employee employee) {
 		return !employee.hasCandidate(shift);
