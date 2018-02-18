@@ -18,6 +18,10 @@ public class Preferences {
 		assert avg();
 	}
 
+	/**
+	 * the avg of all preferences must be equal the average rating.
+	 * @return true iff this holds.
+	 */
 	private boolean avg() {
 		if (preferences.isEmpty()) {
 			return true;
