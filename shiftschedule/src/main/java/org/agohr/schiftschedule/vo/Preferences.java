@@ -10,8 +10,6 @@ import lombok.Value;
 @Value
 public class Preferences {
 
-	private static final int avg = computeAvg();
-
 	@Getter(AccessLevel.NONE)
 	private final Map<Shift, Rating> preferences;
 
@@ -28,18 +26,12 @@ public class Preferences {
 				.map(Rating::getRating)
 				.mapToInt(Integer::intValue)
 				.sum();
-		return sum == Preferences.avg * preferences.size();
+		return sum == Rating.avg.getRating() * preferences.size();
 	}
 
 	public Rating preference(Shift shift) {
 		assert preferences.containsKey(shift);
 		return preferences.get(shift);
-	}
-
-	private static int computeAvg() {
-		int dif = Rating.MaxRating.getRating() - Rating.MinRating.getRating();
-		assert dif % 2 == 0;
-		return Rating.MinRating.getRating() + dif / 2;
 	}
 
 }

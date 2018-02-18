@@ -13,6 +13,7 @@ public class Rating implements Comparable<Rating> {
 
 	public static final Rating MinRating = new Rating(min);
 	public static final Rating MaxRating = new Rating(max);
+	public static final Rating avg = new Rating(computeAvg());
 
 	private final Integer rating;
 
@@ -25,4 +26,11 @@ public class Rating implements Comparable<Rating> {
 	public int compareTo(Rating other) {
 		return Integer.compare(rating, other.rating);
 	}
+
+	private static int computeAvg() {
+		int dif = MaxRating.getRating() - MinRating.getRating();
+		assert dif % 2 == 0;
+		return MinRating.getRating() + dif / 2;
+	}
+
 }

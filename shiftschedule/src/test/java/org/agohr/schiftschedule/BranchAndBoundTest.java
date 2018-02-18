@@ -33,8 +33,10 @@ public class BranchAndBoundTest {
 		Set<Shift> candidatesSet = new HashSet<>(shiftSet);
 		Map<Shift, Rating> p = new HashMap<>();
 		// TODO restrict candidates, vary preferences
+		int j = 3;
 		for (Shift s : candidatesSet) {
-			p.put(s, new Rating(3));
+			p.put(s, new Rating(j));
+			j = j % 5 + 1;
 		}
 		Shifts candidates = new Shifts(candidatesSet);
 		Preferences preferences = new Preferences(p);
