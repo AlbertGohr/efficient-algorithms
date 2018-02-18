@@ -38,4 +38,11 @@ public class Preferences {
 		return preferences.get(shift);
 	}
 
+	public boolean containsCandidate(Shift shift) {
+		return preferences.containsKey(shift);
+	}
+
+	public int size() {
+		return preferences.size();
+	}
 }

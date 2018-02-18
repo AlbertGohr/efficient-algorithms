@@ -5,11 +5,11 @@ Algorithm: Branch and Bound
 
 ## Open Tasks
 * add tests
-  * Assignment getNextUnassignedShift
-  * Rating avg
-  * all upperBounds
-  * all constraints + orderedConstraints
   * QualityEvaluator
+  * Assignment getNextUnassignedShift
+  * all upperBounds
+  * ClaimedNumberOfAssignmentsConstraint
+  * OrderedConstraints
   * ExpireCheck
   * BranchAndBound + Node
 * enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift

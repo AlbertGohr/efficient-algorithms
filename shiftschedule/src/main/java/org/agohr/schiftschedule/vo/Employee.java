@@ -17,13 +17,10 @@ public class Employee {
 	private int claimedNumberOfAssignments;
 
 	@Getter(AccessLevel.NONE)
-	private Shifts candidates;
-
-	@Getter(AccessLevel.NONE)
 	private Preferences preferences;
 
 	public boolean hasCandidate(Shift shift) {
-		return candidates.contains(shift);
+		return preferences.containsCandidate(shift);
 	}
 
 	public Rating preferenceOf(Shift shift) {

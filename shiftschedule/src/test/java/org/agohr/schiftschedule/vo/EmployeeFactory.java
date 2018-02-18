@@ -4,11 +4,14 @@ public class EmployeeFactory {
 
 	public static Employee getEmployee(Shifts candidates) {
 		Preferences preferences = PreferencesFactory.getDefaultPreferences(candidates);
+		return getEmployee(preferences);
+	}
+
+	public static Employee getEmployee(Preferences preferences) {
 		return Employee.builder()
 				.id(1L)
 				.name("agohr")
-				.claimedNumberOfAssignments(candidates.size())
-				.candidates(candidates)
+				.claimedNumberOfAssignments(preferences.size())
 				.preferences(preferences)
 				.build();
 	}

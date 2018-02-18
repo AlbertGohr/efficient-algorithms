@@ -46,7 +46,6 @@ public class BranchAndBoundTest {
 					.id(i)
 					.name("agohr" + i)
 					.claimedNumberOfAssignments(10) // TODO vary
-					.candidates(candidates)
 					.preferences(preferences)
 					.build();
 			employeesSet.add(employee);
