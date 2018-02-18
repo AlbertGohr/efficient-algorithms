@@ -1,5 +1,6 @@
 package org.agohr.schiftschedule.constraints;
 
+import org.agohr.schiftschedule.Constraint;
 import org.agohr.schiftschedule.vo.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CandidateConstraintTest {
 
-	private final CandidateConstraint constraint = new CandidateConstraint();
+	private final Constraint constraint = new CandidateConstraint();
 
 	private Shift shift1; // candidate
 	private Shift shift2; // no candidate
@@ -18,8 +19,8 @@ public class CandidateConstraintTest {
 
 	@Before
 	public void before() {
-		shift1 = ShiftFactory.getShiftByDay(1);
-		shift2 = ShiftFactory.getShiftByDay(2);
+		shift1 = ShiftFactory.getEarlyShiftByDay(1);
+		shift2 = ShiftFactory.getEarlyShiftByDay(2);
 		Shifts shifts = new Shifts(shift1, shift2);
 		Shifts candidates = new Shifts(shift1);
 		employee = EmployeeFactory.getEmployee(candidates);

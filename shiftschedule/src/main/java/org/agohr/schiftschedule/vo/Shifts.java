@@ -25,6 +25,10 @@ public class Shifts {
 		this.shifts = Collections.unmodifiableSet(new HashSet<>(shifts));
 	}
 
+	public Shifts(Shifts other) {
+		this(other.shifts);
+	}
+
 	public Stream<Shift> stream() {
 		return shifts.stream();
 	}
