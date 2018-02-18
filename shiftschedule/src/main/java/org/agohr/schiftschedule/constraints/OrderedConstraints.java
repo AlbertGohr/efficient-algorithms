@@ -9,8 +9,10 @@ import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.Shift;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Value
@@ -21,6 +23,12 @@ public class OrderedConstraints {
 
 	public OrderedConstraints(List<Constraint> constraints) {
 		this.constraints = Collections.unmodifiableList(new ArrayList<>(constraints));
+	}
+
+	public OrderedConstraints(Constraints[] values) {
+		this(Arrays.stream(values)
+				.map(Constraints::get)
+				.collect(Collectors.toList()));
 	}
 
 	public Stream<Constraint> stream() {

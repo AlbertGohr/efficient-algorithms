@@ -55,13 +55,20 @@ public class QualityEvaluatorTest {
 		assertEquals(qualityBasedOnUpperBound, quality);
 	}
 
-	// TODO test semi assignment
+	@Test
+	public void testQualityWithSemiAssignment() {
+		assignment = assignment.add(shift1, employee); // pref 2
+		assignment = assignment.add(shift2, employee); // pref 3
+		int actualQuality = qualityEvaluator.computeQuality(assignment);
+		int expectedQuality = 2 + 3 + Rating.MaxRating.getRating(); // based on sum of preferences + upperBound
+		assertEquals(expectedQuality, actualQuality);
+	}
 
 	@Test
 	public void testQualityWithFullAssignment() {
-		assignment = assignment.add(shift1, employee);
-		assignment = assignment.add(shift2, employee);
-		assignment = assignment.add(shift3, employee);
+		assignment = assignment.add(shift1, employee); // pref 2
+		assignment = assignment.add(shift2, employee); // pref 3
+		assignment = assignment.add(shift3, employee); // pref 4
 		int actualQuality = qualityEvaluator.computeQuality(assignment);
 		int expectedQuality = 2+3+4; // based on sum of preferences
 		assertEquals(expectedQuality, actualQuality);
