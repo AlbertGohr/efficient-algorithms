@@ -5,7 +5,6 @@ import org.agohr.schiftschedule.vo.Assignment;
 import org.agohr.schiftschedule.vo.Employee;
 import org.agohr.schiftschedule.vo.Shift;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,52 +21,43 @@ public class ClaimedNumberOfAssignmentsConstraint implements Constraint {
 
 	@Override
 	public boolean violated(Assignment assignment, Shift shift, Employee employee) {
-		Map<Optional<Employee>, Long> extendedCounts = extendedCounts(assignment);
-		Map<Employee, Long> employeeCounts = new HashMap<>(extendedCounts.size());
-		long available = 0L;
-		for (Map.Entry<Optional<Employee>, Long> entry : extendedCounts.entrySet()) {
-			Optional<Employee> optionalEmployee = entry.getKey();
-			Long count = entry.getValue();
-			if (optionalEmployee.isPresent()) {
-				employeeCounts.put(optionalEmployee.get(), count);
-			} else {
-				available = count;
-			}
-		}
-		return tooManyAssigned(employeeCounts) || notEnoughAvailable(employeeCounts, available);
+		assignment = assignment.add(shift, employee);
+		Map<Employee, Long> employeeCounts = employeeAssignmentCounts(assignment);
+		long available = countUnassignedShifts(assignment);
+		long employeeAssignments = employeeCounts.getOrDefault(employee,0L);
+		return toManyAssigned(employee, employeeAssignments) || notEnoughAvailable(employeeCounts, available);
+	}
+
+	private Map<Employee, Long> employeeAssignmentCounts(Assignment assignment) {
+		return assignment.stream()
+				.map(Map.Entry::getValue)
+				.filter(Optional::isPresent)
+				.map(Optional::get)
+				.collect(Collectors.groupingBy(
+						identity(),
+						Collectors.counting()
+				));
+	}
+
+	private long countUnassignedShifts(Assignment assignment) {
+		return assignment.stream()
+				.filter(entry -> !entry.getValue().isPresent())
+				.count();
+
 	}
 
 	private boolean notEnoughAvailable(Map<Employee, Long> counts, long available) {
 		int missing = 0;
 		for (Map.Entry<Employee, Long> count : counts.entrySet()) {
 			Employee employee = count.getKey();
-			missing += employee.getClaimedNumberOfAssignments() - count.getValue();
+			long assigned = count.getValue();
+			missing += employee.getClaimedNumberOfAssignments() - assigned;
 		}
 		return missing > available;
 	}
 
-	private boolean tooManyAssigned(Map<Employee, Long> counts) {
-		for (Map.Entry<Employee, Long> count : counts.entrySet()) {
-			Employee employee = count.getKey();
-			Long assignments = count.getValue();
-			if (employee.getClaimedNumberOfAssignments() < assignments) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * counts for every employee how often he has been assigned. <br/>
-	 * counts also, how many shifts have not been assigned. Stored in key Optional.empty.
-	 */
-	private Map<Optional<Employee>, Long> extendedCounts(Assignment assignment) {
-		return assignment.stream()
-				.map(Map.Entry::getValue)
-				.collect(Collectors.groupingBy(
-						identity(),
-						Collectors.counting()
-				));
+	private boolean toManyAssigned(Employee employee, long assignments) {
+		return assignments > employee.getClaimedNumberOfAssignments();
 	}
 
 }

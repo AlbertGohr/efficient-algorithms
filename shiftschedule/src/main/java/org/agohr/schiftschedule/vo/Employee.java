@@ -1,13 +1,11 @@
 package org.agohr.schiftschedule.vo;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Value;
+import lombok.*;
 
 
 @Value
 @Builder
+@AllArgsConstructor
 public class Employee {
 
 	private long id;

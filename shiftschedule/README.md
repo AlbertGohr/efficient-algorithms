@@ -97,8 +97,7 @@ Prioritized depth first search. Node priority based on ``q(a)``.
 
 ## Open Tasks
 * add tests
-  * ConstraintsAwareUpperBoundStrategy
-  * ClaimedNumberOfAssignmentsConstraint
+  * ConstraintsAwareUpperBoundStrategy (with Mock)
   * OrderedConstraints (with Mock)
   * BranchAndBound + Node (unit + complete test)
 * enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift. Thus a result contains also a timetable for every employee.
