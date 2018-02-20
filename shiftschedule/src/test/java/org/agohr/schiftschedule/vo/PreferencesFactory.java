@@ -3,6 +3,8 @@ package org.agohr.schiftschedule.vo;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
 public class PreferencesFactory {
 
@@ -24,6 +26,14 @@ public class PreferencesFactory {
 			preferences.put(candidate, rating);
 		}
 		return new Preferences(preferences);
+	}
+
+	public static Preferences getPreferences(Set<Shift> shifts, Function<Shift, Integer> ratingByShift) {
+		Map<Shift, Rating> p = new HashMap<>();
+		shifts.forEach(shift ->
+			p.put(shift, new Rating(ratingByShift.apply(shift)))
+		);
+		return new Preferences(p);
 	}
 
 }

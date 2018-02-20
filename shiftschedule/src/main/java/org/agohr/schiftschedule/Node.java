@@ -41,6 +41,7 @@ class Node {
 	private AssignmentQuality traverseChildren(AssignmentQuality solution, PriorityQueue<Node> children) {
 		for (Node nextNode : children) {
 			if (conf.getExpireCheck().expired(solution.isPresent())) {
+				LOGGER.warning("timeout during computation.");
 				return solution;
 			}
 			if (nextNode.getAssignmentQuality().getQuality() <= solution.getQuality()) {

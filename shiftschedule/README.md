@@ -96,7 +96,7 @@ Prioritized depth first search. Node priority based on ``q(a)``.
 
 
 ## Open Tasks
-* add tests for classes BranchAndBound + Node (unit + complete test)
+* fix BranchAndBound complex test
 * enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift. Thus a result contains also a timetable for every employee.
 * enable shifts for which the day may vary (eg 10 project days in May). Needs new weighting function
 * compute multiple possible (nearly) optimal assignments, so a human may choose in between

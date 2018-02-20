@@ -53,6 +53,10 @@ public class Assignment {
 		return new Assignment(assignment);
 	}
 
+	public Optional<Employee> get(Shift shift) {
+		return assignment.get(shift);
+	}
+
 	public Optional<Shift> getNextUnassignedShift() {
 		return assignment.entrySet().stream()
 				.filter(entry -> !entry.getValue().isPresent())
