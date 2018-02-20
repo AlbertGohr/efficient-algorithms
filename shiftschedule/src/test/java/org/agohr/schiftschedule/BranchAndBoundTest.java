@@ -115,6 +115,9 @@ public class BranchAndBoundTest {
 		// TODO assert more details
 	}
 
+	/**
+	 * two weeks consisting of early and late shifts.
+	 */
 	private Set<Shift> initShifts() {
 		Set<Shift> shiftSet = new HashSet<>();
 		int firstMondayOfMonth = 5;
@@ -129,6 +132,9 @@ public class BranchAndBoundTest {
 		return shiftSet;
 	}
 
+	/**
+	 * agohr, bgohr, cgohr.
+	 */
 	private Employees initEmployees(Set<Shift> shifts) {
 		// agohr: works both weeks. doesn't like monday early or friday late (rating=1).
 		Preferences prefAgohr = PreferencesFactory.getPreferences(shifts, this::ratingAgohr);
