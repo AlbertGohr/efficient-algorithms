@@ -7,6 +7,10 @@ Algorithm: Branch and Bound
 * fix BranchAndBound complex test
 * enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift. Thus a result contains also a timetable for every employee.
 * enable shifts for which the day may vary (eg 10 project days in May). Needs new weighting function
+    * multiple shifts with varying days may belong together.
+* add a location to every shift. Employees can only be assigned if their location constraints are fulfilled.
+* add a shift type property to every shift (e.g. developer-shift, support-shift).  Employees can only be assigned if they match the shift-type.
+* special shift: weekend standby
 * compute multiple possible (nearly) optimal assignments, so a human may choose in between
 * implement GUI
 
