@@ -18,7 +18,7 @@ public class CandidateUpperBoundStrategyTest {
 		shift = ShiftFactory.getEarlyShiftByDay(1);
 		Shifts shifts = new Shifts(shift);
 		Shifts candidates = new Shifts(shift);
-		employee = EmployeeFactory.getEmployee(candidates);
+		employee = EmployeeFactory.getEmployee(1L, "agohr", candidates);
 		assignment = new Assignment(shifts);
 	}
 

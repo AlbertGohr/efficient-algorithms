@@ -24,7 +24,7 @@ public class NoOverlappingShiftsConstraintTest {
 		shiftDay2 = ShiftFactory.getEarlyShiftByDay(2);
 		Shifts shifts = new Shifts(shiftDay1Early, shiftDay1Late, shiftDay2);
 		Shifts candidates = new Shifts(shifts);
-		employee = EmployeeFactory.getEmployee(candidates);
+		employee = EmployeeFactory.getEmployee(1L, "agohr", candidates);
 		assignment = new Assignment(shifts).add(shiftDay1Early, employee);
 	}
 

@@ -21,6 +21,10 @@ public class OrderedConstraints {
 	@Getter(AccessLevel.NONE)
 	private final List<Constraint> constraints;
 
+	public OrderedConstraints(Constraint... constraints) {
+		this(Arrays.stream(constraints).collect(Collectors.toList()));
+	}
+
 	public OrderedConstraints(List<Constraint> constraints) {
 		this.constraints = Collections.unmodifiableList(new ArrayList<>(constraints));
 	}

@@ -23,7 +23,7 @@ public class CandidateConstraintTest {
 		shift2 = ShiftFactory.getEarlyShiftByDay(2);
 		Shifts shifts = new Shifts(shift1, shift2);
 		Shifts candidates = new Shifts(shift1);
-		employee = EmployeeFactory.getEmployee(candidates);
+		employee = EmployeeFactory.getEmployee(1L, "agohr", candidates);
 		assignment = new Assignment(shifts);
 	}
 

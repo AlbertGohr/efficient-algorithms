@@ -5,7 +5,9 @@ import org.agohr.schiftschedule.vo.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -27,18 +29,11 @@ public class QualityEvaluatorTest {
 		shift1 = ShiftFactory.getEarlyShiftByDay(1);
 		shift2 = ShiftFactory.getEarlyShiftByDay(2);
 		shift3 = ShiftFactory.getEarlyShiftByDay(3);
-		Shifts shifts = new Shifts(shift1, shift2, shift3);
-		Preferences preferences = initPreferences(shift1, shift2, shift3);
-		employee = EmployeeFactory.getEmployee(preferences);
+		List<Shift> shiftList = Arrays.asList(shift1, shift2, shift3);
+		Shifts shifts = new Shifts(shiftList);
+		Preferences preferences = PreferencesFactory.getPreferences(shiftList, 2, 3, 4);
+		employee = EmployeeFactory.getEmployee(1L, "agohr", preferences);
 		assignment = new Assignment(shifts);
-	}
-
-	private Preferences initPreferences(Shift shift1, Shift shift2, Shift shift3) {
-		Map<Shift, Rating> preferences = new HashMap<>();
-		preferences.put(shift1, new Rating(2));
-		preferences.put(shift2, new Rating(3));
-		preferences.put(shift3, new Rating(4));
-		return new Preferences(preferences);
 	}
 
 	@Test

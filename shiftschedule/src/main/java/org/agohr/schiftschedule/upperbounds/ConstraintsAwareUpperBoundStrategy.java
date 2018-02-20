@@ -21,7 +21,7 @@ public class ConstraintsAwareUpperBoundStrategy implements UpperBoundStrategy {
 	@Override
 	public Rating getUpperBound(Shift shift, Assignment assignment) {
 		return employees.stream()
-				.filter(e -> constraints.anyViolated(assignment, shift, e))
+				.filter(e -> !constraints.anyViolated(assignment, shift, e))
 				.map(e -> e.preferenceOf(shift))
 				.max(Rating::compareTo)
 				.orElseThrow(IllegalStateException::new);

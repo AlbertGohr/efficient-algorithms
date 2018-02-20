@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Value;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +22,7 @@ public class Shifts {
 		this(Arrays.stream(shifts).collect(Collectors.toSet()));
 	}
 
-	public Shifts(Set<Shift> shifts) {
+	public Shifts(Collection<Shift> shifts) {
 		this.shifts = Collections.unmodifiableSet(new HashSet<>(shifts));
 	}
 

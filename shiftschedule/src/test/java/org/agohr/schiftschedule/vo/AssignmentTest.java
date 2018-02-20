@@ -27,7 +27,7 @@ public class AssignmentTest {
 		}
 		shifts = new Shifts(shiftSet);
 		Preferences preferences = PreferencesFactory.getDefaultPreferences(shifts);
-		employee = EmployeeFactory.getEmployee(preferences);
+		employee = EmployeeFactory.getEmployee(1L, "agohr", preferences);
 		assignment = new Assignment(shifts);
 	}
 
