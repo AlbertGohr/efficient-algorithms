@@ -3,14 +3,22 @@ Based on a given set of employees and shifts, compute the best assigned.
 
 Algorithm: Branch and Bound
 
-## definition
+## 1. Next Tasks
+* fix BranchAndBound complex test
+* enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift. Thus a result contains also a timetable for every employee.
+* enable shifts for which the day may vary (eg 10 project days in May). Needs new weighting function
+* compute multiple possible (nearly) optimal assignments, so a human may choose in between
+* implement GUI
+
+
+## 2. definition
 Let ``N`` be the natural numbers.
 
 Let ``E`` be a finite set of employees.
 
 Let ``S`` be a finite set of shifts.
 
-### assignment ``a``
+### 2.1 assignment ``a``
 Let ``a`` be a vector of employee-shift assignments.
 
     a : (E,null)^|S| 
@@ -21,7 +29,7 @@ We write ``a_s = null`` if Shift ``s`` has not been assigned yet.
 
 If assignment ``a`` is a complete solution, it holds: every shift ``s`` in ``S`` must have been assigned to an employee ``e`` in ``E``. 
 
-### preference ``p``
+### 2.2 preference ``p``
 Let ``p_min, p_max in N`` with ``p_min<=p_max``.
  
     p : ExS->[p_min,p_max] 
@@ -37,7 +45,7 @@ Constraint for preference ``p``:
 Here we choose 
     avg = (p_min+p_max)/2
 
-### quality Q
+### 2.3 quality Q
 Let ``Q`` be the quality of an assignment ``a``.
 
     Q : (E,null)^|S| -> N
@@ -57,7 +65,7 @@ further improved upper bound:
 
     q(a_s=null,s) = max_{e in E} p(e,s), with e available based on constraints on a.
 
-### Assignment Constraints:
+### 2.4 Assignment Constraints:
 #### Constraint: shift candidates ``C_e``
 let ``C_e subset S`` be the set of shift candidates of employee ``e``.
 
@@ -87,20 +95,13 @@ if both shifts have the same employee assigned, then their timeslices must not i
 
     if a_s = a_r then intersect(T_s,T_r) = false
 			
-### Algorithm: Branch & Bound.
+### 2.5 Algorithm: Branch & Bound.
 Branch along assignment ``a``. Initial ``a = null^S``
 
 Maximize ``q(a)``.
 
 Prioritized depth first search. Node priority based on ``q(a)``.
 
-
-## Open Tasks
-* fix BranchAndBound complex test
-* enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift. Thus a result contains also a timetable for every employee.
-* enable shifts for which the day may vary (eg 10 project days in May). Needs new weighting function
-* compute multiple possible (nearly) optimal assignments, so a human may choose in between
-* implement GUI
-
+## 3. Backlog
 
 Similar problem: assign student timetable, teacher, classrooms
