@@ -4,7 +4,6 @@ Based on a given set of employees and shifts, compute the best assigned.
 Algorithm: Branch and Bound
 
 ## 1. Next Tasks
-* fix BranchAndBound complex test
 * enable fallback shift, if no other shift is available (general support) -> force workdays for employees, use fallback shift. Thus a result contains also a timetable for every employee.
 * enable shifts for which the day may vary (eg 10 project days in May). Needs new weighting function
     * multiple shifts with varying days may belong together.

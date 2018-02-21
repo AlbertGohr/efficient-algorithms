@@ -1,14 +1,15 @@
-package org.agohr.schiftschedule;
+package org.agohr.schiftschedule.expirecheck;
 
+import org.agohr.schiftschedule.expirecheck.ExpireCheckImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ExpireCheckTest {
+public class ExpireCheckImplTest {
 
 	@Test
 	public void testExpired() {
-		ExpireCheck expireCheck = new ExpireCheck(0L);
+		ExpireCheckImpl expireCheck = new ExpireCheckImpl(0L);
 		expireCheck.start();
 		assertTrue(expireCheck.expired(false));
 		assertTrue(expireCheck.expired(true));
@@ -20,7 +21,7 @@ public class ExpireCheckTest {
 	 */
 	@Test
 	public void testSemiExpired() {
-		ExpireCheck expireCheck = new ExpireCheck(0L,10000L);
+		ExpireCheckImpl expireCheck = new ExpireCheckImpl(0L,10000L);
 		expireCheck.start();
 		assertFalse(expireCheck.expired(false));
 		assertTrue(expireCheck.expired(true));
@@ -28,7 +29,7 @@ public class ExpireCheckTest {
 
 	@Test
 	public void testNotExpired() {
-		ExpireCheck expireCheck = new ExpireCheck(10000L);
+		ExpireCheckImpl expireCheck = new ExpireCheckImpl(10000L);
 		expireCheck.start();
 		assertFalse(expireCheck.expired(false));
 		assertFalse(expireCheck.expired(true));
