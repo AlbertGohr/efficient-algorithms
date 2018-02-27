@@ -9,6 +9,7 @@ Algorithm: Branch and Bound
     * multiple shifts with varying days may belong together.
 * add a location to every shift. Employees can only be assigned if their location constraints are fulfilled.
 * add a shift type property to every shift (e.g. developer-shift, support-shift).  Employees can only be assigned if they match the shift-type.
+* shift start and shift end may vary inside a given timeslice
 * special shift: weekend standby
 * compute multiple possible (nearly) optimal assignments, so a human may choose in between
 * implement GUI
