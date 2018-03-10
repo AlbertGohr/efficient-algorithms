@@ -14,9 +14,7 @@ Algorithm: Branch and Bound
 * compute multiple possible (nearly) optimal assignments, so a human may choose in between
 * implement GUI
 
-
 ## 2. definition
-Let ``N`` be the natural numbers.
 
 Let ``E`` be a finite set of employees.
 
@@ -25,62 +23,68 @@ Let ``S`` be a finite set of shifts.
 ### 2.1 assignment ``a``
 Let ``a`` be a vector of employee-shift assignments.
 
-    a : (E,null)^|S| 
+![math](https://latex.codecogs.com/svg.latex?\mathbf{a}:(E\cup\{\bot\})^{|S|})
 
-We write ``a_s = e`` if Shift ``s`` has been assigned to employee ``e`` by assignment ``a``.
 
-We write ``a_s = null`` if Shift ``s`` has not been assigned yet.
+We write ![math](https://latex.codecogs.com/svg.latex?\mathbf{a}_s=e) if Shift ``s`` has been assigned to employee ``e`` by assignment ``a``.
+
+We write ![math](https://latex.codecogs.com/svg.latex?\mathbf{a}_s=\bot) if Shift ``s`` has not been assigned yet.
 
 If assignment ``a`` is a complete solution, it holds: every shift ``s`` in ``S`` must have been assigned to an employee ``e`` in ``E``. 
+![math](https://latex.codecogs.com/svg.latex?\forall{s}\in{S}:\mathbf{a}_s\neq\bot)
 
 ### 2.2 preference ``p``
-Let ``p_min, p_max in N`` with ``p_min<=p_max``.
+Let ![math](https://latex.codecogs.com/svg.latex?p_{min},p_{max}\in\mathbb{N},p_{min}\leq{p_{max}})
  
-    p : ExS->[p_min,p_max] 
+![math](https://latex.codecogs.com/svg.latex?\varphi:E\times{S}\to[p_{min},p_{max}])
 
-``p(e,s)`` is the preference of employee ``e`` for taking shift ``s``.
+![math](https://latex.codecogs.com/svg.latex?\varphi(e,s)) is the preference of employee ``e`` for taking shift ``s``.
 
 Constraint for preference ``p``: 
 
-    avg_{s in C_e}(p(e,s)) equal for every e in E 
+![math](https://latex.codecogs.com/svg.latex?\exists{p_{avg}}:p_{avg}=\overline{\{\varphi(e,s)|{s\in{C_{e}}}\}}\forall{e}\in{E})
 
-(for definition of ``C_e subset S`` compare assignment constraints). 
+In words: the average of preferences must be equal for every employee.
 
-Here we choose 
-    avg = (p_min+p_max)/2
+(for definition of candidates ![math](https://latex.codecogs.com/svg.latex?C_e\subseteq{S}) compare assignment constraints). 
+
+Here we choose ![math](https://latex.codecogs.com/svg.latex?p_{avg}=\frac{(p_{min}+p_{max})}{2},p_{min}\equiv p_{max}mod2)
 
 ### 2.3 quality Q
-Let ``Q`` be the quality of an assignment ``a``.
+Let ![math](https://latex.codecogs.com/svg.latex?\varrho(\mathbf{a})) be the quality of an assignment ``a``.
 
-    Q : (E,null)^|S| -> N
-    Q(a) = sum_{s in S} q(a_s,s)
-    q(a_s,s) = p(a_s,s), if a_s != null
-    q(a_s,s) = upper bound, else
+![math](https://latex.codecogs.com/svg.latex?\varrho:(E\cup\{\bot\})^{|S|}\rightarrow\mathbb{N})
+
+![math](https://latex.codecogs.com/svg.latex?\mathbf{\varrho}(\mathbf{a})=\sum_{s\in{S}}\varrho(\mathbf{a}_s,s))
+
+![math](https://latex.codecogs.com/svg.latex?\varrho(e,s)=\varphi(e,s))
+
+![math](https://latex.codecogs.com/svg.latex?\varrho(\bot,s)=upperBound)
 
 Simple upper bound:
- 
-    q(a_s=null,s) = p_max
+
+![math](https://latex.codecogs.com/svg.latex?\varrho(\bot,s)=p_{max})
 
 improved upper bound:
 
-    q(a_s=null,s) = max_{e in E} p(e,s)
+![math](https://latex.codecogs.com/svg.latex?\varrho(\bot,s)={max}_{e\in{E}}\varphi(e,s))
 
 further improved upper bound:
 
-    q(a_s=null,s) = max_{e in E} p(e,s), with e available based on constraints on a.
+![math](https://latex.codecogs.com/svg.latex?\varrho(\bot,s)={max}_{e\in{E}}\varphi(e,s)), with ``e`` available based on constraints on ``a``.
 
 ### 2.4 Assignment Constraints:
 #### Constraint: shift candidates ``C_e``
-let ``C_e subset S`` be the set of shift candidates of employee ``e``.
+let  ![math](https://latex.codecogs.com/svg.latex?C_e\subseteq{S}) be the set of shift candidates of employee ``e``.
 
-``p(e,s)`` may not be defined if Shift ``s`` not in ``C_e``.
+![math](https://latex.codecogs.com/svg.latex?\varphi(e,s)) may not be defined if Shift ``s`` not in ![math](https://latex.codecogs.com/svg.latex?C_e).
 
 #### Constraint: claimed number of shift assignments ``n_e``
-Let ``n_e in N_(>=0)`` be the claimed number of shift assignments to employee ``e``.
+Let ![math](https://latex.codecogs.com/svg.latex?n_e\in\mathbb{N}_{\geq0}) be the claimed number of shift assignments to employee ``e``.
 
 It must hold:
-    
-    sum_{e in E} n_e = |S|
+
+![math](https://latex.codecogs.com/svg.latex?\sum_{e\in{E}}n_e=|S|)
 
 #### Constraint: no overlapping shifts
 Let Datetime be a combination of date ``dd.mm.yyyy`` and time ``hh:mm:ss:millis``
@@ -100,11 +104,11 @@ if both shifts have the same employee assigned, then their timeslices must not i
     if a_s = a_r then intersect(T_s,T_r) = false
 			
 ### 2.5 Algorithm: Branch & Bound.
-Branch along assignment ``a``. Initial ``a = null^S``
+Branch along assignment ``a``. Initial ![math](https://latex.codecogs.com/svg.latex?a=\bot^S)
 
-Maximize ``q(a)``.
+Maximize ![math](https://latex.codecogs.com/svg.latex?\varrho(\mathbf{a})).
 
-Prioritized depth first search. Node priority based on ``q(a)``.
+Prioritized depth first search. Node priority based on ![math](https://latex.codecogs.com/svg.latex?\varrho(\mathbf{a})).
 
 ## 3. Backlog
 
