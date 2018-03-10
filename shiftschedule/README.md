@@ -48,7 +48,7 @@ In words: the average of preferences must be equal for every employee.
 
 (for definition of candidates ![math](https://latex.codecogs.com/svg.latex?C_e\subseteq{S}) compare assignment constraints). 
 
-Here we choose ![math](https://latex.codecogs.com/svg.latex?p_{avg}=\frac{(p_{min}+p_{max})}{2},p_{min}\equiv p_{max}mod2)
+Here we choose ![math](https://latex.codecogs.com/svg.latex?p_{avg}=\frac{(p_{min}+p_{max})}{2},p_{min}\equiv{p}_{max}mod2)
 
 ### 2.3 quality Q
 Let ![math](https://latex.codecogs.com/svg.latex?\varrho(\mathbf{a})) be the quality of an assignment ``a``.
