@@ -24,8 +24,12 @@ public class Pitch {
 		return octaveSize * (octave + octaveOffset) + octavePitch.ordinal();
 	}
 
-	public OctavePitch getNote() {
+	public OctavePitch getOctavePitch() {
 		return OctavePitch.values()[midiValue % octaveSize];
+	}
+
+	public int getOctave() {
+		return midiValue / octaveSize - octaveOffset;
 	}
 	
 	public Pitch halfToneStep(int halfTones) {

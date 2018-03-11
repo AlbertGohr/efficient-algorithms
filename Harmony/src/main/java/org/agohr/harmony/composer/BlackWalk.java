@@ -108,7 +108,7 @@ public class BlackWalk implements Composer {
 	 * @return neighboured black key.
 	 */
 	private Pitch blackMove(final Pitch pitch, int step) {
-		OctavePitch octavePitch = pitch.getNote();
+		OctavePitch octavePitch = pitch.getOctavePitch();
 		assert octavePitch.isBlack();
 		if (pitch.getMidiValue() < minPitch.getMidiValue() && step <= 0) {
 			// move upwards if pitch is to low and not moving upwards
@@ -133,7 +133,7 @@ public class BlackWalk implements Composer {
 	}
 
 	private Pitch upBlackKey(Pitch pitch) {
-		OctavePitch octavePitch = pitch.getNote();
+		OctavePitch octavePitch = pitch.getOctavePitch();
 		switch (octavePitch) {
 			case Cis:
 			case Fis:
@@ -148,7 +148,7 @@ public class BlackWalk implements Composer {
 	}
 
 	private Pitch downBlackKey(Pitch pitch) {
-		OctavePitch octavePitch = pitch.getNote();
+		OctavePitch octavePitch = pitch.getOctavePitch();
 		switch (octavePitch) {
 			case Cis:
 			case Fis:

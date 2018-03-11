@@ -1,5 +1,5 @@
 ## Todos
-* Write more UnitTests
+* Write UnitTests for BlackWalk & MidiWriter
 * improve BlackWalk pitch boarder handling
 * parameterize BlackWalk
 
