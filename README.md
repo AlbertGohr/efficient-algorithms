@@ -6,3 +6,6 @@ A collection of projects.
 Based on a given set of employees and shifts, compute the best assigned.
 
 Algorithm: Branch and Bound
+
+## harmony
+procedural music generation
