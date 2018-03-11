@@ -1,15 +1,15 @@
 package org.agohr.harmony.midi;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.agohr.harmony.notes.Channel;
 import org.agohr.harmony.notes.Fraction;
 import org.agohr.harmony.notes.Note;
 import org.agohr.harmony.notes.Pause;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * takes the internal data structure and writes a MIDI file.
@@ -24,21 +24,15 @@ public class MidiWriter {
 	 * @param channels  the channels of the file
 	 * @param filePath  the path of the file
 	 */
-	public final void write(final String name, final String copyright, final List<Channel> channels,
-							final String filePath) {
+	public final void write(final String name, final String copyright, final List<Channel> channels, final String filePath) {
 		final List<Byte> bytes = this.createBytes(name, copyright, channels);
 		try {
 			final FileOutputStream fos = new FileOutputStream(filePath);
-
 			fos.write(this.to_bytes(bytes));
-
 			fos.close();
-		} catch (final FileNotFoundException ex) {
-			System.err.println("FileNotFoundException : " + ex);
-		} catch (final IOException ioe) {
-			System.err.println("IOException : " + ioe);
+		} catch (final IOException e) {
+			throw new UncheckedIOException(e.getMessage(), e);
 		}
-
 	}
 
 	/**
@@ -226,23 +220,23 @@ public class MidiWriter {
 	}
 
 	/**
-	 * converts x into n bytes (highest byte first).
+	 * converts the int value into n bytes (highest byte first).
 	 *
-	 * @param x_ value
+	 * @param value value
 	 * @param n  number of bytes
 	 * @return the bytes
 	 */
-	private byte[] toNBytes(final int x_, final int n) {
-		assert x_ >= 0;
+	private byte[] toNBytes(final int value, final int n) {
+		assert value >= 0;
 		assert n >= 0;
 
-		int x = x_;
-		final byte[] bytes = new byte[n];
+		int remainder = value;
+		final byte[] byteArray = new byte[n];
 		for (int i = n - 1; i >= 0; --i) {
-			bytes[i] = (byte) x;
-			x = x >> 8;
+			byteArray[i] = (byte) remainder;
+			remainder = remainder >> 8;
 		}
-		return bytes;
+		return byteArray;
 	}
 
 	/**
@@ -252,11 +246,11 @@ public class MidiWriter {
 	 * @return the bytes
 	 */
 	private byte[] to_bytes(final List<Byte> bytes) {
-		final byte[] bytes_ = new byte[bytes.size()];
+		final byte[] convertedBytes = new byte[bytes.size()];
 		for (int i = 0; i < bytes.size(); ++i) {
-			bytes_[i] = bytes.get(i);
+			convertedBytes[i] = bytes.get(i);
 		}
-		return bytes_;
+		return convertedBytes;
 	}
 
 }
