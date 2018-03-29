@@ -9,3 +9,6 @@ Algorithm: Branch and Bound
 
 ## harmony
 procedural music generation
+
+## mandelbrot
+mandelbrot visualization
