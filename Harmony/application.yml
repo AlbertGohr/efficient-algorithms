@@ -34,3 +34,7 @@ firstDuration: 4
 # lambda is a parameter of the distribution.
 # the algorithm is inaccurate for lambda > 4.
 poissonLambda: 1
+
+# floatingPoint number rho, 0 <= rho <= 1
+# probability to change the duration with the next note
+durationRho: 0.3

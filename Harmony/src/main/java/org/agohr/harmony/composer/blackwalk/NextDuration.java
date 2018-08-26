@@ -12,7 +12,11 @@ class NextDuration {
 
 	private final Random rnd;
 
+	private final double rho;
+
 	NextDuration(Random rnd, Configuration conf) {
+		rho = conf.getDurationRho();
+		assert 0 <= rho && rho <= 1;
 		this.rnd = rnd;
 		minDuration = new Fraction(1, conf.getMinDuration());
 		maxDuration = new Fraction((1), conf.getMaxDuration());
@@ -36,11 +40,10 @@ class NextDuration {
 		assert duration.lessOrEqual(maxDuration);
 		assert maxDuration.lessOrEqual(new Fraction(1, 1));
 		assert 0.0 <= d && d <= 1.0;
-		double pChange = 0.15;
 
-		if (d < pChange) {
+		if (d < rho/2) {
 			return minDuration.less(duration) ? duration.multiply(new Fraction(1, 2)) : duration.multiply(2);
-		} else if (d < pChange * 2) {
+		} else if (d < rho) {
 			return duration.less(maxDuration) ? duration.multiply(2) : duration.multiply(new Fraction(1, 2));
 		} else {
 			return duration;

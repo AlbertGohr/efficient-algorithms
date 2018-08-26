@@ -34,6 +34,7 @@ public class BlackWalk implements Composer {
 	@Override
 	public final List<Channel> compose() {
 		int n = conf.getNoteCount();
+		assert n >= 0;
 		Instrument instrument = new Instrument(conf.getInstrument());
 
 		Fraction startDuration = new Fraction(1, conf.getFirstDuration());

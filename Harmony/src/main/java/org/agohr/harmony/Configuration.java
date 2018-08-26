@@ -26,4 +26,6 @@ public class Configuration {
 
 	private int poissonLambda;
 
+	private double durationRho;
+
 }
