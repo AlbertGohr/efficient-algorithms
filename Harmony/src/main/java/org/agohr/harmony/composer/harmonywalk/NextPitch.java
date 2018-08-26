@@ -37,6 +37,9 @@ class NextPitch {
 
 	Pitch computeNextPitch(Pitch pitch) {
 		assert scale.isInScale(pitch);
+		if (scale.down(pitch).getMidiValue() < minPitch.getMidiValue() && maxPitch.getMidiValue() < scale.up(pitch).getMidiValue()) {
+			return pitch;
+		}
 		int p = poisson.value();
 		boolean neg = rnd.nextBoolean();
 		if (neg) {
@@ -44,7 +47,7 @@ class NextPitch {
 				neg = false;
 			}
 		} else {
-			if (scale.up(pitch).getMidiValue() < minPitch.getMidiValue()) {
+			if (maxPitch.getMidiValue() < scale.up(pitch).getMidiValue()) {
 				neg = true;
 			}
 		}

@@ -46,7 +46,9 @@ class NextDuration {
 		assert duration.lessOrEqual(maxDuration);
 		assert maxDuration.lessOrEqual(new Fraction(1, 1));
 		assert 0.0 <= d && d <= 1.0;
-
+		if (minDuration.equals(duration) && duration.equals(maxDuration)) {
+			return duration;
+		}
 		if (d < rho/2) {
 			return minDuration.less(duration) ? duration.multiply(new Fraction(1, 2)) : duration.multiply(2);
 		} else if (d < rho) {
