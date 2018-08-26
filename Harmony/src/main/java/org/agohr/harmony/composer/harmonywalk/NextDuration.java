@@ -1,4 +1,4 @@
-package org.agohr.harmony.composer.blackwalk;
+package org.agohr.harmony.composer.harmonywalk;
 
 import org.agohr.harmony.Configuration;
 import org.agohr.harmony.notes.Fraction;

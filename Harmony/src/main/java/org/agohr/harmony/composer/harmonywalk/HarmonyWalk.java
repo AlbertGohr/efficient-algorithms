@@ -1,4 +1,4 @@
-package org.agohr.harmony.composer.blackwalk;
+package org.agohr.harmony.composer.harmonywalk;
 
 import org.agohr.harmony.Configuration;
 import org.agohr.harmony.composer.Composer;
@@ -10,24 +10,23 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * creates a new song. <br/>
- * Only choosing black keyboard keys always sounds great. Pentatonic.
+ * creates a new song.
  */
-public class BlackWalk implements Composer {
+public class HarmonyWalk implements Composer {
 
 	private final NextPitch nextPitch;
 	private final NextDuration nextDuration;
 
 	private final Configuration conf;
 
-	public BlackWalk(Random rnd, Configuration conf) {
+	public HarmonyWalk(Random rnd, Configuration conf) {
 		this.conf = conf;
 		nextPitch = new NextPitch(rnd, conf);
 		nextDuration = new NextDuration(rnd, conf);
 	}
 
 	/**
-	 * Random walk along black keys.
+	 * Random walk along the given scale.
 	 *
 	 * @return a new song.
 	 */
@@ -40,19 +39,19 @@ public class BlackWalk implements Composer {
 		Fraction startDuration = new Fraction(1, conf.getFirstDuration());
 		Pitch startPitch = new Pitch(conf.getFirstPitch());
 
-		List<Note> notes = this.blackWalk(n, startDuration, startPitch);
+		List<Note> notes = this.walk(n, startDuration, startPitch);
 		return Collections.singletonList(new Channel(0, instrument, notes));
 	}
 
 	/**
-	 * random walk along black keys.
+	 * random walk along the given scale.
 	 *
 	 * @param n             number of notes
 	 * @param startDuration duration of first note
 	 * @param startPitch    pitch of first note
 	 * @return list of notes
 	 */
-	private List<Note> blackWalk(int n, Fraction startDuration, Pitch startPitch) {
+	private List<Note> walk(int n, Fraction startDuration, Pitch startPitch) {
 		assert 0 <= n;
 		Fraction duration = startDuration;
 		Pitch pitch = startPitch;

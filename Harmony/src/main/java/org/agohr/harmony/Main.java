@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 
-import org.agohr.harmony.composer.blackwalk.BlackWalk;
+import org.agohr.harmony.composer.harmonywalk.HarmonyWalk;
 import org.agohr.harmony.composer.Composer;
 import org.agohr.harmony.midi.MidiWriter;
 import org.agohr.harmony.notes.Channel;
@@ -21,7 +21,7 @@ public final class Main {
 		Configuration configuration = loadConfiguration();
 
 		Random random = new Random(configuration.getSeed());
-        Composer composer = new BlackWalk(random, configuration);
+        Composer composer = new HarmonyWalk(random, configuration);
         List<Channel> channels = composer.compose();
 
         System.out.println(channels);
