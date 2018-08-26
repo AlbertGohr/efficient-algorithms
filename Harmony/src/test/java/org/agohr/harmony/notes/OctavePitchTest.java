@@ -9,11 +9,11 @@ public class OctavePitchTest {
 
 	@Test
 	public void testIsBlack() {
-		assertTrue(OctavePitch.Cis.isBlack());
-		assertTrue(OctavePitch.Dis.isBlack());
-		assertTrue(OctavePitch.Fis.isBlack());
-		assertTrue(OctavePitch.Gis.isBlack());
-		assertTrue(OctavePitch.Ais.isBlack());
+		assertTrue(OctavePitch.C_SHARP.isBlack());
+		assertTrue(OctavePitch.D_SHARP.isBlack());
+		assertTrue(OctavePitch.F_SHARP.isBlack());
+		assertTrue(OctavePitch.G_SHARP.isBlack());
+		assertTrue(OctavePitch.A_SHARP.isBlack());
 	}
 
 	@Test

@@ -14,12 +14,12 @@ public class Pentatonic implements Scale {
 	public Pitch up(Pitch pitch) {
 		OctavePitch octavePitch = pitch.getOctavePitch();
 		switch (octavePitch) {
-			case Cis:
-			case Fis:
-			case Gis:
+			case C_SHARP:
+			case F_SHARP:
+			case G_SHARP:
 				return pitch.halfToneStep(2);
-			case Dis:
-			case Ais:
+			case D_SHARP:
+			case A_SHARP:
 				return pitch.halfToneStep(3);
 			default:
 				throw new IllegalStateException(pitch + " is no black key");
@@ -30,12 +30,12 @@ public class Pentatonic implements Scale {
 	public Pitch down(Pitch pitch) {
 		OctavePitch octavePitch = pitch.getOctavePitch();
 		switch (octavePitch) {
-			case Cis:
-			case Fis:
+			case C_SHARP:
+			case F_SHARP:
 				return pitch.halfToneStep(-3);
-			case Dis:
-			case Gis:
-			case Ais:
+			case D_SHARP:
+			case G_SHARP:
+			case A_SHARP:
 				return pitch.halfToneStep(-2);
 			default:
 				throw new IllegalStateException(pitch + " is no black key");

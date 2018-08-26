@@ -1,5 +1,5 @@
 # Todos
-* provide diatonic scale.
+* provide diatonic minor scales.
 
 * do not configure number of notes but number of bars.
 * Write UnitTests for BlackWalk & MidiWriter

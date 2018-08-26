@@ -10,7 +10,7 @@ public class PitchTest {
 	@Test
 	public void testPitchConstructor() {
 		assertThat(new Pitch(OctavePitch.C, 0).getMidiValue(), is(60));
-		assertThat(new Pitch(OctavePitch.Cis, 0).getMidiValue(), is(61));
+		assertThat(new Pitch(OctavePitch.C_SHARP, 0).getMidiValue(), is(61));
 		assertThat(new Pitch(OctavePitch.C, 1).getMidiValue(), is(72));
 	}
 
@@ -28,7 +28,7 @@ public class PitchTest {
 
 	@Test
 	public void testGetOctave() {
-		Pitch pitch = new Pitch(OctavePitch.Gis, 2);
+		Pitch pitch = new Pitch(OctavePitch.G_SHARP, 2);
 		assertThat(pitch.getOctave(), is(2));
 	}
 
