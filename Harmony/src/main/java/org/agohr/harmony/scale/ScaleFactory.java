@@ -5,6 +5,8 @@ public class ScaleFactory {
 	public Scale byName(String name) {
 		String cleanedName = name.trim().toUpperCase();
 		switch (cleanedName) {
+			case "C-MAJOR":
+				return new CMajor();
 			case "PENTATONIC":
 				return new Pentatonic();
 			case "CHROMATIC":

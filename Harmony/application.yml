@@ -9,7 +9,7 @@ seed: 0
 # hint: first instrument (Acoustic Grand Piano) has number 0, second instrument has number 1, and so on.
 instrument: 106 # Shamisen
 
-# available scales: Pentatonic, Chromatic
+# available scales: C-major, Pentatonic, Chromatic
 scale: Pentatonic
 
 # integer number of notes the track should consist of.
@@ -18,7 +18,7 @@ noteCount: 5000
 # note pitch is denoted by its midi-value, integer.
 # a midi-value ranges from 0-127. middle C (scientific C4) is 60.
 # compare https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies
-# here the firstPitch must be a black key.
+# here the firstPitch must be one the given scale.
 # it must  hold: min <= first <= max
 minPitch: 48 # C3
 maxPitch: 95 # B6

@@ -10,11 +10,11 @@ public class Chromatic implements Scale {
 
 	@Override
 	public Pitch up(Pitch pitch) {
-		return new Pitch(pitch.getMidiValue() + 1 );
+		return pitch.halfToneStep(1);
 	}
 
 	@Override
 	public Pitch down(Pitch pitch) {
-		return new Pitch(pitch.getMidiValue() - 1);
+		return pitch.halfToneStep(-1);
 	}
 }
