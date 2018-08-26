@@ -23,7 +23,7 @@ public class BlackWalk implements Composer {
 	public BlackWalk(Random rnd, Configuration conf) {
 		this.conf = conf;
 		nextPitch = new NextPitch(rnd, conf);
-		nextDuration = new NextDuration(rnd);
+		nextDuration = new NextDuration(rnd, conf);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class BlackWalk implements Composer {
 		int n = 5000;   // number of Notes
 		Instrument instrument = Instrument.Shamisen;
 
-		Fraction startDuration = new Fraction(1, 4);
+		Fraction startDuration = new Fraction(1, conf.getFirstDuration());
 		Pitch startPitch = new Pitch(conf.getFirstPitch());
 
 		List<Note> notes = this.blackWalk(n, startDuration, startPitch);

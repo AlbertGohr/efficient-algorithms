@@ -13,4 +13,8 @@ public class Configuration {
 	private int maxPitch;
 	private int firstPitch;
 
+	private int minDuration;
+	private int maxDuration;
+	private int firstDuration;
+
 }

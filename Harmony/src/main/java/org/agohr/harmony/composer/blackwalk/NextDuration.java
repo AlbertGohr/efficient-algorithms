@@ -1,17 +1,22 @@
 package org.agohr.harmony.composer.blackwalk;
 
-import lombok.RequiredArgsConstructor;
+import org.agohr.harmony.Configuration;
 import org.agohr.harmony.notes.Fraction;
 
 import java.util.Random;
 
-@RequiredArgsConstructor
 class NextDuration {
 
-	private final Fraction minDuration = new Fraction(1, 16);
-	private final Fraction maxDuration = new Fraction(1, 2);
+	private final Fraction minDuration;
+	private final Fraction maxDuration;
 
 	private final Random rnd;
+
+	NextDuration(Random rnd, Configuration conf) {
+		this.rnd = rnd;
+		minDuration = new Fraction(1, conf.getMinDuration());
+		maxDuration = new Fraction((1), conf.getMaxDuration());
+	}
 
 	Fraction computeNextDuration(Fraction duration) {
 		double d = rnd.nextDouble();
