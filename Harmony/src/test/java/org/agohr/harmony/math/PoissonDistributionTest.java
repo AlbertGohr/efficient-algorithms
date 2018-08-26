@@ -42,4 +42,10 @@ public class PoissonDistributionTest {
 		}
 	}
 
+	@Test
+	public void testLambda() {
+		Random rnd = new Random(0);
+		new PoissonDistribution(rnd, 11);
+	}
+
 }

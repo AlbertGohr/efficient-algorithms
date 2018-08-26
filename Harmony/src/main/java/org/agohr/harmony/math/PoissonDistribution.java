@@ -1,11 +1,13 @@
 package org.agohr.harmony.math;
 
-import java.util.Random;
+import org.apache.commons.math3.util.ArithmeticUtils;
+
+import java.util.*;
 
 public class PoissonDistribution {
 
     /** cumulative distribution function */
-    private final double[] cdf;
+    private final List<Double> cdf;
 
     private final Random rnd;
 
@@ -15,24 +17,25 @@ public class PoissonDistribution {
     	assert lambda > 0;
         this.rnd = rnd;
         this.lambda = lambda;
-		cdf = computeCDF(10);
+		cdf = computeCDF();
     }
 
     /**
      * computes the cumulative distribution function F: [0,n] -> [0,1] of the poisson distribution. <br/>
-     * F is monotonous increasing, F(i) = array[i], 0<=i<n. <br/>
-     * Since we don't compute F on values above n, we define: F(n) = 1
-     * @param n length of the result array.
-     * @return array[i] = F(i)
+     * F is monotonous increasing, F(i) = list[i], 0<=i<n. <br/>
+     * Since we don't compute F on values above n, we define: F(n) = 1 <br/>
+	 * it holds: F(n-1) > 1 - eps.
+     * @return list[i] = F(i)
      */
-    private double[] computeCDF(int n) {
-        double[] border = new double[n];
+    private List<Double> computeCDF() {
+		List<Double> border = new ArrayList<>();
+		double eps = 0.01;
         double sum = 0;
-        for (int i=0; i<border.length; ++i) {
-            sum += poisson(i);
-            border[i] = sum;
-        }
-        return border;
+        do {
+            sum += poisson(border.size());
+			border.add(sum);
+        } while (sum <= 1.0 - eps);
+		return Collections.unmodifiableList(border);
     }
 
     /**
@@ -42,33 +45,21 @@ public class PoissonDistribution {
      */
     private double poisson(int k) {
         assert k >= 0;
-        return Math.pow(lambda, k) / (fak(k) * Math.exp(lambda));
+        return Math.pow(lambda, k) / (ArithmeticUtils.factorial(k) * Math.exp(lambda));
     }
 
-    /**
-     * simple factorial algorithm for small values
-     */
-    private static int fak(int n) {
-        assert n >= 0;
-        int fak = 1;
-        for (int i=2; i<=n; ++i) {
-            fak *= i;
-        }
-        return fak;
-    }
-
-    /** @return a poisson(lambda=1) random value. */
+    /** @return a poisson random value. */
     public final int value() {
         /*
-         * since the first values of the poisson distribution have the highest probability, this is already an efficient solution.
+         * only efficient for small lambda
          */
         final double d = this.rnd.nextDouble();
-        for (int i = 0; i< cdf.length; ++i) {
-            if (d < cdf[i]) {
+        for (int i = 0; i< cdf.size(); ++i) {
+            if (d < cdf.get(i)) {
                 return i;
             }
         }
-        return cdf.length;
+        return cdf.size();
     }
 
 }

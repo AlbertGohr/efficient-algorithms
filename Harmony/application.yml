@@ -32,7 +32,7 @@ firstDuration: 4
 # lambda: positive integer.
 # a poisson distribution is used to compute the next pitch.
 # lambda is a parameter of the distribution.
-# the algorithm is inaccurate for lambda > 4.
+# lambda values greater than 11 are currently not supported.
 poissonLambda: 1
 
 # floatingPoint number rho, 0 <= rho <= 1
