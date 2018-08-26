@@ -3,7 +3,7 @@ package org.agohr.harmony;
 import java.util.List;
 import java.util.Random;
 
-import org.agohr.harmony.composer.BlackWalk;
+import org.agohr.harmony.composer.blackwalk.BlackWalk;
 import org.agohr.harmony.composer.Composer;
 import org.agohr.harmony.midi.MidiWriter;
 import org.agohr.harmony.notes.Channel;
