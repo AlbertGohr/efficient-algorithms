@@ -14,6 +14,8 @@ public class Configuration {
 
 	private int instrument;
 
+	private String scale;
+
 	private int noteCount;
 
 	private int minPitch;

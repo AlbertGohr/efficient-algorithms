@@ -9,6 +9,9 @@ seed: 0
 # hint: first instrument (Acoustic Grand Piano) has number 0, second instrument has number 1, and so on.
 instrument: 106 # Shamisen
 
+# available scales: Pentatonic, Chromatic
+scale: Pentatonic
+
 # integer number of notes the track should consist of.
 noteCount: 5000
 

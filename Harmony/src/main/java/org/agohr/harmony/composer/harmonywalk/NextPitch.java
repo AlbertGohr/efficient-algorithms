@@ -3,8 +3,8 @@ package org.agohr.harmony.composer.harmonywalk;
 import org.agohr.harmony.Configuration;
 import org.agohr.harmony.math.PoissonDistribution;
 import org.agohr.harmony.notes.Pitch;
-import org.agohr.harmony.scale.Pentatonic;
 import org.agohr.harmony.scale.Scale;
+import org.agohr.harmony.scale.ScaleFactory;
 
 import java.util.Random;
 
@@ -24,13 +24,15 @@ class NextPitch {
 	private final Random rnd;
 	private final PoissonDistribution poisson;
 
-	private final Scale scale = new Pentatonic(); // TODO make this configurable
+	private final Scale scale;
 
 	NextPitch(Random rnd, Configuration conf) {
 		this.rnd = rnd;
 		poisson = new PoissonDistribution(rnd, conf.getPoissonLambda());
 		minPitch = new Pitch(conf.getMinPitch());
 		maxPitch = new Pitch(conf.getMaxPitch());
+		ScaleFactory scaleFactory = new ScaleFactory();
+		scale = scaleFactory.byName(conf.getScale());
 	}
 
 	Pitch computeNextPitch(Pitch pitch) {
