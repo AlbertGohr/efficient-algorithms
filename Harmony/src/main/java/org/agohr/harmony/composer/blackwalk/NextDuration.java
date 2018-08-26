@@ -9,7 +9,7 @@ import java.util.Random;
  * with p = rho/2 diminish duration by half <br/>
  * with p = rho/2 double duration <br/>
  * with p = 1-rho leave duration unchanged. <br/>
- * if the change violates min/max duration, the change is reversed.
+ * if the change violates min/max duration, the change is reversed. ("keep changing")
  */
 class NextDuration {
 

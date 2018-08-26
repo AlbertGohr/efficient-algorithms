@@ -12,7 +12,8 @@ import java.util.Random;
  * a step leads to the next adjacent note (here only black keys). <br/>
  * steps are 50/50 up or down. <br/>
  * number of steps are based on a poisson distribution. <br/>
- * if a step violates min/max pitch, this and the remaining steps are reversed.
+ * if all steps violate min/max, the steps are reversed ("keep moving"). <br/>
+ * if some but not all steps violate min/max, the last note before min/max is selected.
  */
 class NextPitch {
 
@@ -32,6 +33,15 @@ class NextPitch {
 	Pitch computeNextPitch(Pitch pitch) {
 		int p = poisson.value();
 		boolean neg = rnd.nextBoolean();
+		if (neg) {
+			if (downBlackKey(pitch).getMidiValue() < minPitch.getMidiValue()) {
+				neg = false;
+			}
+		} else {
+			if (upBlackKey(pitch).getMidiValue() < minPitch.getMidiValue()) {
+				neg = true;
+			}
+		}
 		int step = neg ? -p : p;
 		return this.blackMove(pitch, step);
 	}
@@ -46,24 +56,20 @@ class NextPitch {
 	private Pitch blackMove(Pitch pitch, int step) {
 		OctavePitch octavePitch = pitch.getOctavePitch();
 		assert octavePitch.isBlack();
-		if (pitch.getMidiValue() < minPitch.getMidiValue() && step <= 0) {
-			// move upwards if pitch is to low and not moving upwards
-			step = step == 0 ? 1 : -step;
-			return blackMove(pitch, step);
-		}
-		if (pitch.getMidiValue() > maxPitch.getMidiValue() && step >= 0) {
-			// move downwards if pitch is to high and not moving downwards
-			step = step == 0 ? -1 : -step;
-			return blackMove(pitch, step);
-		}
+
 		if (step > 0) {
-			// increasing step
-			return this.blackMove(upBlackKey(pitch), step - 1);
+			Pitch next = upBlackKey(pitch);
+			if (next.getMidiValue() > maxPitch.getMidiValue()) {
+				return pitch;
+			}
+			return blackMove(next, step - 1);
 		} else if (step < 0) {
-			// decreasing step
-			return this.blackMove(downBlackKey(pitch), step + 1);
-		} else {
-			// no steps left, select the black key
+			Pitch next = downBlackKey(pitch);
+			if (next.getMidiValue() < minPitch.getMidiValue()) {
+				return pitch;
+			}
+			return blackMove(next, step + 1);
+		} else { // step == 0
 			return pitch;
 		}
 	}

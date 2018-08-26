@@ -1,6 +1,6 @@
 # Todos
 * provide diatonic and chromatic as alternatives for pentatonic.
-* improve BlackWalk pitch boarder handling: do not change intermediate, only initial
+
 * do not configure number of notes but number of bars.
 * Write UnitTests for BlackWalk & MidiWriter
 
