@@ -1,24 +1,26 @@
 package org.agohr.harmony.composer.blackwalk;
 
 import lombok.RequiredArgsConstructor;
+import org.agohr.harmony.Configuration;
 import org.agohr.harmony.math.PoissonDistribution;
 import org.agohr.harmony.notes.OctavePitch;
 import org.agohr.harmony.notes.Pitch;
 
 import java.util.Random;
 
-@RequiredArgsConstructor
 class NextPitch {
 
-	private final Pitch minPitch = new Pitch(OctavePitch.C, -1);
-	private final Pitch maxPitch = new Pitch(OctavePitch.B, 2);
+	private final Pitch minPitch; // = new Pitch(OctavePitch.C, -1);
+	private final Pitch maxPitch; // = new Pitch(OctavePitch.B, 2);
 
 	private final Random rnd;
 	private final PoissonDistribution poisson;
 
-	NextPitch(Random rnd) {
+	NextPitch(Random rnd, Configuration conf) {
 		this.rnd = rnd;
 		poisson = new PoissonDistribution(rnd);
+		minPitch = new Pitch(conf.getMinPitch());
+		maxPitch = new Pitch(conf.getMaxPitch());
 	}
 
 	Pitch computeNextPitch(Pitch pitch) {

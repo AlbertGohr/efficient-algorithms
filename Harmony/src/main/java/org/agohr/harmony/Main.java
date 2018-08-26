@@ -21,14 +21,14 @@ public final class Main {
 		Configuration configuration = loadConfiguration();
 
 		Random random = new Random(configuration.getSeed());
-        final Composer composer = new BlackWalk(random);
-        final List<Channel> channels = composer.compose();
+        Composer composer = new BlackWalk(random, configuration);
+        List<Channel> channels = composer.compose();
 
         System.out.println(channels);
 
-        final MidiWriter mW = new MidiWriter();
-        final String name = "demo";
-        final String copyright = "harmony";
+        MidiWriter mW = new MidiWriter();
+        String name = "demo";
+        String copyright = "harmony";
         mW.write(name, copyright, channels, configuration.getFilename());
     }
 

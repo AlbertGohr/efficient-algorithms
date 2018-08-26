@@ -3,3 +3,16 @@ seed: 0
 
 # String filename
 filename: BlackWalk.mid
+
+# pitch is denoted by its midi-value.
+# a midi-value ranges from 0-127. middle C (scientific C4) is 60.
+# compare https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies
+
+# integer midi-value
+minPitch: 48 # C3
+
+#integer midi-value
+maxPitch: 95 # B6
+
+# integer midi-value
+firstPitch: 73 # C#5

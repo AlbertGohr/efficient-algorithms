@@ -1,5 +1,6 @@
 package org.agohr.harmony.composer.blackwalk;
 
+import org.agohr.harmony.Configuration;
 import org.agohr.harmony.composer.Composer;
 import org.agohr.harmony.notes.*;
 
@@ -17,8 +18,11 @@ public class BlackWalk implements Composer {
 	private final NextPitch nextPitch;
 	private final NextDuration nextDuration;
 
-	public BlackWalk(Random rnd) {
-		nextPitch = new NextPitch(rnd);
+	private final Configuration conf;
+
+	public BlackWalk(Random rnd, Configuration conf) {
+		this.conf = conf;
+		nextPitch = new NextPitch(rnd, conf);
 		nextDuration = new NextDuration(rnd);
 	}
 
@@ -33,7 +37,7 @@ public class BlackWalk implements Composer {
 		Instrument instrument = Instrument.Shamisen;
 
 		Fraction startDuration = new Fraction(1, 4);
-		Pitch startPitch = new Pitch(OctavePitch.Cis, 1);
+		Pitch startPitch = new Pitch(conf.getFirstPitch());
 
 		List<Note> notes = this.blackWalk(n, startDuration, startPitch);
 		return Collections.singletonList(new Channel(0, instrument, notes));
