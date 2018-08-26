@@ -28,3 +28,9 @@ firstPitch: 73 # C#5
 minDuration: 16
 maxDuration: 2
 firstDuration: 4
+
+# lambda: positive integer.
+# a poisson distribution is used to compute the next pitch.
+# lambda is a parameter of the distribution.
+# the algorithm is inaccurate for lambda > 4.
+poissonLambda: 1

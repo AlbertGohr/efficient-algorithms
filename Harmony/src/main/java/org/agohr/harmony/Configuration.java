@@ -2,6 +2,9 @@ package org.agohr.harmony;
 
 import lombok.Data;
 
+/**
+ * compare sample application.yml
+ */
 @Data
 public class Configuration {
 
