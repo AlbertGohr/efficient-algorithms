@@ -1,0 +1,5 @@
+# integer seed for random values
+seed: 0
+
+# String filename
+filename: BlackWalk.mid
