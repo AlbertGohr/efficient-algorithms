@@ -13,5 +13,6 @@ mvn install
 
 # Execution
 Use the harmony-<Version>-jar-with-dependencies.jar
-copy the application.yml into the same directory as the jar. 
-java -jar harmony-*.jar
+copy the application.yml into the same directory as the jar.
+Via console: java -jar harmony-*.jar
+Or use harmony.cmd
