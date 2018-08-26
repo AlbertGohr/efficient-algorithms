@@ -27,7 +27,7 @@ public class PoissonDistributionTest {
 		// given
 		Random rnd = new Random(0);
 		// when
-		PoissonDistribution poissonDistribution = new PoissonDistribution(rnd);
+		PoissonDistribution poissonDistribution = new PoissonDistribution(rnd, 1);
 		List<Integer> values = new ArrayList<>();
 		int n = 100000;
 		for (int i = 0; i< n; ++i) {

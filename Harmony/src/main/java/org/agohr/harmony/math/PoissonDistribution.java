@@ -4,15 +4,18 @@ import java.util.Random;
 
 public class PoissonDistribution {
 
-    private static final double eInverse = Math.exp(-1.0);
-
     /** cumulative distribution function */
-    private static final double[] cdf = computeCDF(10);
+    private final double[] cdf;
 
     private final Random rnd;
 
-    public PoissonDistribution(Random rnd) {
+    private final int lambda;
+
+    public PoissonDistribution(Random rnd, int lambda) {
+    	assert lambda > 0;
         this.rnd = rnd;
+        this.lambda = lambda;
+		cdf = computeCDF(10);
     }
 
     /**
@@ -22,7 +25,7 @@ public class PoissonDistribution {
      * @param n length of the result array.
      * @return array[i] = F(i)
      */
-    private static double[] computeCDF(int n) {
+    private double[] computeCDF(int n) {
         double[] border = new double[n];
         double sum = 0;
         for (int i=0; i<border.length; ++i) {
@@ -35,13 +38,11 @@ public class PoissonDistribution {
     /**
      * Poisson Distribution: <br/>
      * P_lambda(k) = lambda^k/(k!*e^lambda) <br/>
-     * here lambda = 1, thus <br/>
-     * P(k) = 1/(k!*e) <br/>
      * 0 < P(k) < 1
      */
-    private static double poisson(int i) {
-        assert i >= 0;
-        return eInverse / fak(i);
+    private double poisson(int k) {
+        assert k >= 0;
+        return Math.pow(lambda, k) / (fak(k) * Math.exp(lambda));
     }
 
     /**

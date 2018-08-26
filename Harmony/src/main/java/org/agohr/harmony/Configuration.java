@@ -24,4 +24,6 @@ public class Configuration {
 	private int maxDuration;
 	private int firstDuration;
 
+	private int poissonLambda;
+
 }

@@ -1,6 +1,6 @@
 # Todos
 * parameterize BlackWalk
-* fix poisson distribution for lambda > 4
+* fix poisson distribution for lambda > 4 (or use a poisson library)
 * do not configure number of notes but number of bars.
 * Write UnitTests for BlackWalk & MidiWriter
 * improve BlackWalk pitch boarder handling

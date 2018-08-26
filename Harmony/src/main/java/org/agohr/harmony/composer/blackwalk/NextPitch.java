@@ -17,7 +17,7 @@ class NextPitch {
 
 	NextPitch(Random rnd, Configuration conf) {
 		this.rnd = rnd;
-		poisson = new PoissonDistribution(rnd);
+		poisson = new PoissonDistribution(rnd, conf.getPoissonLambda());
 		minPitch = new Pitch(conf.getMinPitch());
 		maxPitch = new Pitch(conf.getMaxPitch());
 	}
