@@ -7,6 +7,13 @@ import org.agohr.harmony.notes.Pitch;
 
 import java.util.Random;
 
+/**
+ * next pitch = last pitch + steps. <br/>
+ * a step leads to the next adjacent note (here only black keys). <br/>
+ * steps are 50/50 up or down. <br/>
+ * number of steps are based on a poisson distribution. <br/>
+ * if a step violates min/max pitch, this and the remaining steps are reversed.
+ */
 class NextPitch {
 
 	private final Pitch minPitch;
