@@ -4,6 +4,14 @@ filename: BlackWalk.mid
 # integer seed for random values
 seed: 0
 
+# integer midi-value for the instrument
+# https://en.wikipedia.org/wiki/General_MIDI
+# hint: first instrument (Acoustic Grand Piano) has number 0, second instrument has number 1, and so on.
+instrument: 106 # Shamisen
+
+# integer number of notes the track should consist of.
+noteCount: 5000
+
 # note pitch is denoted by its midi-value, integer.
 # a midi-value ranges from 0-127. middle C (scientific C4) is 60.
 # compare https://en.wikipedia.org/wiki/Scientific_pitch_notation#Table_of_note_frequencies

@@ -34,7 +34,7 @@ public class ToneLadder implements Composer {
 		notes.add(new Note(pitch, duration));
 		pitch = pitch.halfToneStep(1); // c
 		notes.add(new Note(pitch, duration));
-		return Collections.singletonList(new Channel(0, Instrument.Shamisen, notes));
+		return Collections.singletonList(new Channel(0, Instrument.shamisen, notes));
 	}
 
 }

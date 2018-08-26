@@ -9,6 +9,10 @@ public class Configuration {
 
 	private int seed;
 
+	private int instrument;
+
+	private int noteCount;
+
 	private int minPitch;
 	private int maxPitch;
 	private int firstPitch;

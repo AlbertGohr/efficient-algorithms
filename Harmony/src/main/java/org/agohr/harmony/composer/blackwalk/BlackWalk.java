@@ -33,8 +33,8 @@ public class BlackWalk implements Composer {
 	 */
 	@Override
 	public final List<Channel> compose() {
-		int n = 5000;   // number of Notes
-		Instrument instrument = Instrument.Shamisen;
+		int n = conf.getNoteCount();
+		Instrument instrument = new Instrument(conf.getInstrument());
 
 		Fraction startDuration = new Fraction(1, conf.getFirstDuration());
 		Pitch startPitch = new Pitch(conf.getFirstPitch());

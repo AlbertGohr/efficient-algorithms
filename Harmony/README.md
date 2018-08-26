@@ -1,4 +1,5 @@
 # Todos
+* do not configure number of notes but number of bars.
 * Write UnitTests for BlackWalk & MidiWriter
 * improve BlackWalk pitch boarder handling
 * parameterize BlackWalk
