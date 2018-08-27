@@ -1,8 +1,12 @@
 package org.agohr.harmony.math;
 
+import org.apache.commons.math3.exception.MathArithmeticException;
 import org.apache.commons.math3.util.ArithmeticUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class PoissonDistribution {
 
@@ -31,10 +35,16 @@ public class PoissonDistribution {
 		List<Double> border = new ArrayList<>();
 		double eps = 0.01;
         double sum = 0;
-        do {
-            sum += poisson(border.size());
-			border.add(sum);
-        } while (sum <= 1.0 - eps);
+        try {
+			do {
+				sum += poisson(border.size());
+				border.add(sum);
+			} while (sum <= 1.0 - eps);
+		} catch (MathArithmeticException e) {
+        	e.printStackTrace();
+			int last = border.size() - 1;
+			System.out.println("F("+last+") = " + border.get(last));
+		}
 		return Collections.unmodifiableList(border);
     }
 

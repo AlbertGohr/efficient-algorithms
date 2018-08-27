@@ -35,8 +35,10 @@ firstDuration: 4
 
 # lambda: positive integer.
 # a poisson distribution is used to compute the next pitch.
+# https://en.wikipedia.org/wiki/Poisson_distribution
 # lambda is a parameter of the distribution.
-# lambda values greater than 11 are currently not supported.
+# increasing lambda increases the average pitch-difference between two succeeding notes.
+# lambda values greater than 11 causes the distribution to be inaccurate due to the current implementation.
 poissonLambda: 1
 
 # floatingPoint number rho, 0 <= rho <= 1
